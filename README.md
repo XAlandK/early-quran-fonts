@@ -37,8 +37,9 @@ set in the font at the same size.*
 
 ![The pixel audit for nine letters: each letter in the manuscript, the edges of the ink and of the font laid over each other, and the difference](docs/images/birmingham-hijazi-audit.jpg)
 
-*The pixel audit, shown for nine of the 53 traced letter forms (by row, left
-to right: ا و · لا ـه · ـعـ ـطـ · ک لـ · ص). Each set of three shows the letter in the manuscript; the same
+*The pixel audit, shown for nine of the 53 traced letter forms. By row, left
+to right: alif ا and waw و; lam-alif لا and final ha ـه; medial ain ـعـ and
+medial ta ـطـ; kaf ک and initial lam لـ; sad ص. Each set of three shows the letter in the manuscript; the same
 picture with the edge of the ink in light blue and the edge of the font in
 red; and the difference (blue: ink the font lacks, red: font where there is
 no ink, grey: the joins, which are left out). Over all 53 forms the font's edge
