@@ -47,6 +47,12 @@ BNF_FOLIOS = ['%03d%s' % (f, s) for f in range(71, 87) for s in 'rv']
 # strokes.  Folios 78 and 79 are not enlarged: module.py finds their writing a little
 # smaller too (0.85 - 0.93), but their pen is as heavy as on the Birmingham pages
 # (strokes 1.09 - 1.13), so enlarging them would make their letters too bold.
+#
+# census.py has since measured every one of the 34 pages in the same way, and line by
+# line: folios 71-77 are written at 0.76 - 0.89 of the Birmingham size (the three pages
+# below at 0.89, 0.82 and 0.85), folios 78-86 at 0.87 - 0.98.  The lines that letters
+# are taken from on folios 78v and 79r are at 0.93 - 0.97: those three letters are 3 to
+# 7 % small, and are left so for the reason given above.
 MODULE = {
     'P071r': 0.89,
     'P075r': 0.83,

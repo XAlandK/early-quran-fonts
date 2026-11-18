@@ -21,6 +21,10 @@ options  hole    counters smaller than this (px2) are flaked ink and are filled
          drop    rectangles taken out of the letter after it has been cut out
          exact   cut exactly at the given x;  nosplit: do not part the letter at a neck
          level   added to the grey level at which the edge of the ink is put
+         crack, eye, eye_min   a pale patch inside the ink is flaked ink if it is a mere crack and a
+                 counter (an eye) if it is wide: cracks narrower than 2 x crack px are closed
+                 (default 1.4), a patch at least 2 x eye px wide (1.5) and eye_min px2 large (12)
+                 is a counter.  Lowered where the eye of the letter is itself a narrow slit.
 """
 GROUPS = [
     # عليك القران لتشقى
@@ -73,7 +77,7 @@ GROUPS = [
     # وما بينهما وما تحت
     {'id': 'L15b', 'page': 'L', 'line': 15, 'items': [
         ('WAW.isol#', 1675, 1575), ('MEEM.init#', 1550, 1485), ('ALIF.fina#', 1485, 1420),
-        ('BEH.init#', 1375, 1325), ('BEH.medi#', 1325, 1280), ('BEH.medi#', 1280, 1235), ('HEH.medi#', 1235, 1150),
+        ('BEH.init#', 1375, 1325), ('BEH.medi#', 1325, 1280), ('BEH.medi#', 1280, 1235), ('HEH.medi', 1235, 1150),
         ('MEEM.medi#', 1150, 1060), ('ALIF.fina#', 1060, 1000),
         ('WAW.isol', 965, 870), ('MEEM.init#', 860, 785), ('ALIF.fina#', 785, 720),
         ('BEH.init#', 705, 650), ('HAH.medi#', 650, 550), ('BEH.fina', 550, 355)]},
@@ -95,7 +99,7 @@ GROUPS = [
         ('LAM.isol', 1385, 1245, {'hole': 300}),
         ('FEH.init#', 1195, 1120), ('ALIF.fina#', 1120, 1045),
         ('BEH.init#', 1015, 975), ('HEH.fina#', 975, 905),
-        ('BEH.init#', 885, 855), ('AIN.medi#', 855, 780), ('LAM.medi#', 780, 700), ('MEEM.fina', 700, 605),
+        ('BEH.init#', 885, 855), ('AIN.medi#', 855, 780), ('LAM.medi#', 780, 700), ('MEEM.fina', 700, 605, {'crack': 0.6, 'eye': 0.6, 'eye_min': 6}),
         ('ALIF.isol#', 605, 545), ('LAM.init#', 520, 478), ('SEEN.medi#', 478, 392), ('REH.fina#', 392, 300)]},
     # واخفى الله لا اله
     {'id': 'L17a', 'page': 'L', 'line': 17, 'items': [
@@ -162,7 +166,7 @@ GROUPS = [
         ('ALIF.isol#', 1775, 1695)]},
     # تيها نودى يموسى
     {'id': 'L21b', 'page': 'L', 'line': 21, 'items': [
-        ('BEH.init#', 1660, 1618), ('BEH.medi#', 1618, 1580), ('HEH.medi', 1580, 1495, {'hole': 80}), ('ALIF.fina#', 1495, 1420),
+        ('BEH.init#', 1660, 1618), ('BEH.medi#', 1618, 1580), ('HEH.medi#', 1580, 1495, {'hole': 80}), ('ALIF.fina#', 1495, 1420),
         ('BEH.init#', 1325, 1292), ('WAW.fina#', 1292, 1205), ('DAL.isol#', 1175, 1065), ('YEH.isol', 1045, 965),
         ('BEH.init#', 860, 820), ('MEEM.medi#', 820, 750), ('WAW.fina#', 750, 655),
         ('SEEN.init#', 605, 500), ('YEH.fina#', 500, 455)]},

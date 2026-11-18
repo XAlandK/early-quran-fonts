@@ -9,6 +9,7 @@ Draw the figures shown in the README at the root of the repository.
   docs/images/birmingham-hijazi-vs-manuscript.jpg  manuscript lines, the same text in the font under each
   docs/images/birmingham-hijazi-audit.jpg          nine letters of the pixel audit
   docs/images/birmingham-hijazi-paris-forms.jpg    the audit of the nine forms from the Paris leaves
+  docs/images/birmingham-hijazi-census.jpg         the middle letter of some forms over all 34 pages
   docs/images/madinah-naqsh-specimen.png           text set in Madinah Naqsh
 
 Only the two fonts and photographs of the manuscript itself are used: the
@@ -136,11 +137,15 @@ PARIS_ROWS = (("MEEM.isol", "QAF.isol"), ("AIN.isol", "HAH.isol"), ("HAH.fina", 
               ("FEH.fina", "SAD.fina"), ("TAH.fina",))
 
 
-def audit_grid(out, rows=AUDIT_ROWS, gap=20):
-    """Pictures of the pixel audit, in justified rows."""
+CENSUS_ROWS = (("HEH.medi", "MEEM.fina", "WAW.isol", "FEH.medi"), ("KAF.init", "SAD.init"),
+               ("ALIF.isol", "LAM.init", "TAH.medi", "HAH.init", "NOON.fina"))
+
+
+def audit_grid(out, rows=AUDIT_ROWS, gap=20, folder="audit"):
+    """Pictures of the pixel audit (or of the census), in justified rows."""
     strips = []
     for keys in rows:
-        row = [Image.open(os.path.join(HERE, "audit", k + ".jpg")).convert("RGB") for k in keys]
+        row = [Image.open(os.path.join(HERE, folder, k + ".jpg")).convert("RGB") for k in keys]
         h = int((WIDTH - gap * (len(row) - 1)) / sum(c.width / c.height for c in row))
         strip = Image.new("RGB", (WIDTH, h), (255, 255, 255))
         x = 0
@@ -172,6 +177,7 @@ def main():
     print("lines", manuscript_vs_font(os.path.join(OUT, "birmingham-hijazi-vs-manuscript.jpg")))
     print("audit", audit_grid(os.path.join(OUT, "birmingham-hijazi-audit.jpg")))
     print("paris", audit_grid(os.path.join(OUT, "birmingham-hijazi-paris-forms.jpg"), PARIS_ROWS))
+    print("census", audit_grid(os.path.join(OUT, "birmingham-hijazi-census.jpg"), CENSUS_ROWS, folder="audit/census"))
     print("madinah", specimen(MN_TTF, [
         ("يايها الذين امنوا اتقوا الله وقولوا", 120, rasm),
         ("قولا سديدا يصلح لكم اعملكم", 120, rasm),

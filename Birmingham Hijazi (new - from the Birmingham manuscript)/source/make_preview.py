@@ -39,8 +39,8 @@ FONTS = [
     # css name, path, title, (subtitle ckb, en), [(tag ckb, en)], (badge ckb, en) or None
     # (fonts with a badge are ours and have ss01 / ss02)
     ("Birmingham Hijazi", f"{BH_DIR}/BirminghamHijazi-Regular.ttf", "Birmingham Hijazi",
-     ("وەشانی ٤ — پیتەکان ڕاستەوخۆ لە مەرەکەبی دەستنووسی بیرمینگهام و پەڕەکانی هەمان مصحف لە پاریس هێڵکاری کراون",
-      "Version 4 — the letters are traced directly from the ink of the Birmingham manuscript "
+     ("وەشانی ٤٫١ — پیتەکان ڕاستەوخۆ لە مەرەکەبی دەستنووسی بیرمینگهام و پەڕەکانی هەمان مصحف لە پاریس هێڵکاری کراون",
+      "Version 4.1 — the letters are traced directly from the ink of the Birmingham manuscript "
       "and of the leaves of the same Qur'an in Paris"),
      [("خەتی حیجازی", "Hijazi script"), ("سەدەی یەکەمی کۆچی (٥٦٨–٦٤٥ ز)", "1st century AH (568–645 CE)"),
       ("ss01 · ss02", "ss01 · ss02"), ("کوردیش دەنووسێت", "Writes Kurdish too")],
@@ -342,6 +342,7 @@ def main():
     worst = max(audit["rows"], key=lambda r: r["edge"])
     var = json.load(open(os.path.join(HERE, "audit", "variation.json")))["summary"]
     dash = json.load(open(os.path.join(HERE, "dash.json")))
+    cen = json.load(open(os.path.join(HERE, "audit", "census.json")))
     px = lambda v, f="%.1f": num(f % v, " px")
 
     cards = []
@@ -376,6 +377,15 @@ def main():
         "%%V_FONT%%": px(var["font"], "%.2f"),
         "%%X_N%%": num(var.get("cross_paris", 0)), "%%X_WITHIN%%": px(var.get("within", 0), "%.2f"),
         "%%X_ACROSS%%": px(var.get("across", 0), "%.2f"),
+        "%%C_PAGES%%": num(cen["summary"]["pages"]), "%%C_PLACES%%": num(cen["summary"]["places_looked_at"]),
+        "%%C_N%%": num(cen["summary"]["instances"]),
+        "%%C_DONE%%": num(sum("rank" in f for f in cen["forms"].values())),
+        "%%C_GOOD%%": num(sum(f.get("rank", 1) < 0.5 for f in cen["forms"].values())),
+        "%%C_SCRIBE%%": px(cen["summary"]["to_middle_scribe"], "%.2f"), "%%C_FONT%%": px(cen["summary"]["to_middle_font"], "%.2f"),
+        "%%C_HEH%%": b64(os.path.join(BH_DIR, "source", "audit", "census", "HEH.medi.jpg")),
+        "%%C_MEEM%%": b64(os.path.join(BH_DIR, "source", "audit", "census", "MEEM.fina.jpg")),
+        "%%C_WAW%%": b64(os.path.join(BH_DIR, "source", "audit", "census", "WAW.isol.jpg")),
+        "%%C_KAF%%": b64(os.path.join(BH_DIR, "source", "audit", "census", "KAF.init.jpg")),
         "%%D_N%%": num(dash["n"]), "%%D_LEN%%": px(dash["length"]), "%%D_THICK%%": px(dash["thickness"]),
         "%%D_ANGLE%%": num("%.0f" % dash["angle"], "°"), "%%D_STACK%%": px(dash["stack_down"]),
         "%%D_GAP%%": px(dash["gap"]),
@@ -468,6 +478,7 @@ figure{margin:0}
 figcaption{font-size:13px;color:var(--muted);margin-top:6px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr));gap:12px}
 .lt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px}
+.cen{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:10px 0;align-items:end}.cen figure{margin:0}.cen img{width:100%;height:auto;display:block;border-radius:8px}.cen figcaption{font-size:.82rem;text-align:center;margin-top:4px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .stat > b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
@@ -540,6 +551,14 @@ a{color:var(--accent)}
 <p class="note">[[دەستنووسی بیرمینگهام دوو پەڕەیە لە مصحفێک کە شازدە پەڕەی تری لە پاریسن (کتێبخانەی نیشتمانیی فەڕەنسا، Arabe 328، پەڕەکانی ٧١–٨٦). لە چوار لاپەڕەکەی بیرمینگهام تەنها دووانیان بە وێنەی گەورە بڵاو کراونەتەوە، و ئەم نۆ شێوەیە لەو دوو لاپەڕەیەدا نەهاتوون. لە وەشانی ٣دا لە پارچەی پیتەکانی تر دروست کرابوون؛ ئێستا وەک هەموو پیتەکانی تر ڕاستەوخۆ لە مەرەکەبی هەمان نووسەر هێڵکاری کراون:||The Birmingham manuscript is two leaves of a Qur'an of which sixteen more leaves are in Paris (Bibliothèque nationale de France, Arabe 328, folios 71–86). Only two of the four Birmingham pages have been published in a large photograph, and these nine forms do not occur on them. In version 3 they were assembled from pieces of other letters; now they are traced from the ink of the same scribe, like all the others:]]</p>
 <ul class="plain">%%PARIS%%</ul>
 <p class="note">[[بۆ ئەوەی دڵنیا بین کە پەڕەکانی پاریس هەمان دەستخەتن، %%X_N%% پیتی تریشیان لێ هێڵکاری کرا و لەگەڵ هەمان پیت لە بیرمینگهام بەراورد کران: دووریی نێوان پیتێکی پاریس و پیتێکی بیرمینگهام %%X_ACROSS%%ـە، و دووریی نێوان دوو پیتی بیرمینگهام خۆیان %%X_WITHIN%%ـە. نووسەرەکە لە هەندێک لاپەڕەی پاریسدا بچووکتر نووسیویەتی؛ ئەو لاپەڕانە بە پێی پێوانە گەورە کراونەتەوە تا پیتەکانیان بە قەبارەی پیتەکانی بیرمینگهام بن.||To make sure the Paris leaves are in the same hand, %%X_N%% other letters were traced from them and compared with the same letters in Birmingham: a Paris letter is %%X_ACROSS%% from a Birmingham letter, and two Birmingham letters are %%X_WITHIN%% from each other. On some of the Paris pages the scribe wrote smaller; those pages are enlarged, by a measured amount, so that their letters have the size of the Birmingham letters.]]</p>
+<p class="note">[[پشکنینی سێیەم هەموو مصحفەکەی گرتەوە: هەر شێوەیەکی فۆنتەکە لەسەر هەر %%C_PAGES%% لاپەڕەکە (دووی بیرمینگهام و سی و دووی پاریس) دانرا و %%C_N%% نموونەی پیتەکان دۆزرانەوە، لە %%C_PLACES%% شوێنی پشکنراو. نموونەکانی هەر پیتێک لەسەر یەک دانران تا «پیتی ناوەند»ی نووسەرەکە دەربکەوێت. نموونەیەکی نووسەرەکە %%C_SCRIBE%% لە پیتی ناوەند دوورە، و پیتی فۆنتەکە %%C_FONT%%. لە %%C_GOOD%% لە %%C_DONE%% شێوەدا پیتی فۆنتەکە لە زۆربەی نموونەکانی نووسەرەکە خۆی نزیکترە لە ناوەند. ئەم پشکنینە دوو هەڵەی دۆزییەوە کە پێشتر نەدەبینران، چونکە لە ناو پیتەکەدان نەک لە لێواری: لە «هـ»ی ناوەڕاستدا پەڵەیەکی مەرەکەبی هەڵوەریو وەک چاوی پیتەکە گیرابوو، و لە «م»ی کۆتاییدا چاوە باریکەکە پڕ کرابووەوە. هەردووکیان لە وەشانی ٤٫١دا چاک کراون. ئاگاداری: نموونەیەک بۆیە دەدۆزرێتەوە چونکە لە پیتی فۆنتەکە دەچێت، بۆیە جیاوازیی ڕاستەقینەی نووسەرەکە لەم ژمارانە گەورەترە.||The third audit took in the whole Qur'an: every form of the font was laid over each of the %%C_PAGES%% pages (two in Birmingham, thirty-two in Paris) and %%C_N%% instances of the letters were found, in %%C_PLACES%% places looked at. The instances of each letter were laid over each other to show the scribe's "middle letter". An instance of the scribe is %%C_SCRIBE%% from the middle letter, the letter of the font %%C_FONT%%. In %%C_GOOD%% of %%C_DONE%% forms the letter of the font is nearer to the middle than most of the scribe's own instances. This audit found two faults that could not be seen before, because they lie inside the letter, not on its edge: in medial ha' a patch of flaked ink had been taken for the eye of the letter, and in final mim the narrow eye had been filled. Both are corrected in version 4.1. A warning: an instance is found because it looks like the letter of the font, so the scribe's true variation is larger than these figures.]]</p>
+<div class="cen">
+  <figure><img loading="lazy" alt="هـ ی ناوەڕاست" data-alt-en="medial ha'" src="data:image/jpeg;base64,%%C_HEH%%"><figcaption>[[«هـ»ی ناوەڕاست||medial ha']]</figcaption></figure>
+  <figure><img loading="lazy" alt="م ی کۆتایی" data-alt-en="final mim" src="data:image/jpeg;base64,%%C_MEEM%%"><figcaption>[[«م»ی کۆتایی||final mim]]</figcaption></figure>
+  <figure><img loading="lazy" alt="و ی تەنها" data-alt-en="isolated waw" src="data:image/jpeg;base64,%%C_WAW%%"><figcaption>[[«و»ی تەنها||isolated waw]]</figcaption></figure>
+  <figure><img loading="lazy" alt="ک ی سەرەتا" data-alt-en="initial kaf" src="data:image/jpeg;base64,%%C_KAF%%"><figcaption>[[«ک»ی سەرەتا||initial kaf]]</figcaption></figure>
+</div>
+<p class="legend">[[پیتی ناوەندی چوار شێوە: خۆڵەمێشی پیشان دەدات چەند لە نموونەکان لە هەر خاڵێکدا مەرەکەبیان هەیە (ڕەش = هەموویان)؛ هێڵی سوور لێواری پیتی فۆنتەکەیە. شین: مەرەکەبێک کە زۆربەی نموونەکان هەیانە و فۆنتەکە نییەتی؛ پرتەقاڵی: مەرەکەبی فۆنتەکە کە کەم نموونە هەیانە.||The middle letter of four forms: the grey shows how many of the instances have ink at each point (black = all of them); the red line is the outline of the font's letter. Blue: ink that most instances have and the font lacks; orange: ink of the font that few instances have.]]</p>
 <p class="note">[[خاڵەکان: نووسەرەکە خاڵ وەک هێڵێکی بچووکی لار دەنووسێت. %%D_N%% خاڵی دەستنووسەکە پێوران (درێژی %%D_LEN%%، ئەستووری %%D_THICK%%، لاری %%D_ANGLE%%)؛ خاڵی فۆنتەکە هێڵکاریی ئەو خاڵەیە کە لە هەموویان نزیکترە لە ناوەند، و دووریی خاڵەکان لە یەکتر (%%D_STACK%%) و لە پیتەکەیان (%%D_GAP%%) هەمان دووریی پێوراوە. هەمزە، بزوێنەکان، ژمارەکان، نیشانەکانی خاڵبەندی و نیشانە کوردییەکان (ڤ ی سەر ڵ ڕ ۆ ێ، هێڵی دووەمی گ) لە دەستنووسەکەدا نین و بە هەمان ئەستووری کێشراون.||Dots: the scribe writes a dot as a short slanted dash. %%D_N%% dashes of the manuscript were measured (length %%D_LEN%%, thickness %%D_THICK%%, slant %%D_ANGLE%%); the dot of the font is the traced outline of the dash nearest to the middle of them all, and the dashes stand as far from each other (%%D_STACK%%) and from their letter (%%D_GAP%%) as was measured. Hamza, vowel marks, digits, punctuation and the Kurdish marks (the small v of ڵ ڕ ۆ ێ and the second stroke of گ) do not occur in the manuscript and are drawn at the same weight.]]</p>
 </section>
 

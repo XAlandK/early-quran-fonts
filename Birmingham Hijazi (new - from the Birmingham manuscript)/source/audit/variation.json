@@ -1,10 +1,10 @@
 {
  "summary": {
-  "instances": 391,
+  "instances": 390,
   "left_out": 53,
-  "forms": 46,
+  "forms": 45,
   "scribe": 2.0,
-  "font": 1.88,
+  "font": 1.85,
   "cross_forms": 14,
   "cross_paris": 26,
   "within": 2.0,
@@ -39,15 +39,7 @@
   },
   {
    "form": "AIN.isol",
-   "n": 2,
-   "scribe": 0.5,
-   "used": 0.5,
-   "best": 0.5,
-   "rank": 1,
-   "medoid": "AIN.isol@P78v03:0",
-   "pages": [
-    "P078v"
-   ]
+   "n": 1
   },
   {
    "form": "AIN.medi",
@@ -276,7 +268,7 @@
    "scribe": 2.12,
    "used": 2.0,
    "best": 2.0,
-   "rank": 3,
+   "rank": 1,
    "medoid": "HEH.medi@L15b:6",
    "pages": [
     "L"
@@ -382,8 +374,8 @@
    "form": "MEEM.fina",
    "n": 3,
    "scribe": 2.0,
-   "used": 1.96,
-   "best": 1.71,
+   "used": 1.59,
+   "best": 1.56,
    "rank": 2,
    "medoid": "MEEM.fina@R15a:3",
    "pages": [
