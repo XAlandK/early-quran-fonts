@@ -8,8 +8,8 @@ Birmingham Hijazi — v3.000
 دەستنووسەکە بە کاربۆنی ڕادیۆیی ٥٦٨–٦٤٥ ی زایینییە.
 
 وەشانەکان:
-  v1  بە دەست کێشرابوو (لە فۆڵدەری «وەشانی پێشوو (v1)» دایە).
-  v2  یەکەم هێڵکاری لە وێنەکەوە (لە فۆڵدەری «وەشانی پێشوو (v2)» دایە).
+  v1  بە دەست کێشرابوو (لە فۆڵدەری «Previous version (v1 - hand-drawn)» دایە).
+  v2  یەکەم هێڵکاری لە وێنەکەوە (لە فۆڵدەری «Previous version (v2 - first tracing)» دایە).
   v3  دوای پشکنینی پیکسڵ بە پیکسڵ. ئەمانە چاک کران:
       - لێواری مەرەکەب بە یەک ئاستی ڕەنگ بۆ هەموو پەڕەکە دیاری دەکرا، بۆیە
         هێڵە کاڵەکان نزیکەی نیو پیکسڵ لە هەر لایەک باریکتر دەردەچوون. ئێستا
@@ -111,7 +111,8 @@ Files
   source/audit.py                lays the built font over the manuscript and measures
   source/audit/                  its pictures (one per form) and audit.json
   source/compare_sheet.py        side-by-side sheets of exemplar and outline
-  source/make_preview.py         rebuilds ../پیشاندانی-فۆنتەکان.html (needs the Madinah
+  source/make_preview.py         rebuilds ../پیشاندانی-فۆنتەکان.html, the Kurdish/English
+                                 preview page of all the fonts (needs the Madinah
                                  photographs, which are not in the public repository)
 
 Rebuild:  pip install fonttools shapely numpy pillow scipy scikit-image freetype-py

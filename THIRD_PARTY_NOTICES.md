@@ -8,10 +8,10 @@ this project.
 
 | Font | Folder | Copyright | License | Source |
 |---|---|---|---|---|
-| Raqq 2.000 | `کوفی (دواتر - نەک بیرمینگهام)/Raqq/` | © 2021–2023 The Raqq Project Authors | GNU AGPL v3 (`LICENSE` in the folder) | https://github.com/aliftype/raqq (release v2.00) |
-| Qashib 2.000 | `کوفی (دواتر - نەک بیرمینگهام)/Qashib/` | © 2025 The Qashib Project Authors | GNU AGPL v3 (`LICENSE` in the folder) | https://github.com/aliftype/qashib (release v2.00) |
-| Qahiri 4.000 | `کوفی (دواتر - نەک بیرمینگهام)/Qahiri/` | © 2021 The Qahiri Project Authors | SIL Open Font License 1.1 (`OFL.txt` in the folder) | https://github.com/aliftype/qahiri (release v4.00) |
-| hijazi 1.00 | `Hijazi - گشتی (خالید العبدالله، 2019)/` | © 2019 Khalid Alabdullah | Creative Commons Attribution-NonCommercial 4.0 International, https://creativecommons.org/licenses/by-nc/4.0/ | https://github.com/khalidalabdullah/hijazifont |
+| Raqq 2.000 | `Kufic (later style - not Birmingham)/Raqq/` | © 2021–2023 The Raqq Project Authors | GNU AGPL v3 (`LICENSE` in the folder) | https://github.com/aliftype/raqq (release v2.00) |
+| Qashib 2.000 | `Kufic (later style - not Birmingham)/Qashib/` | © 2025 The Qashib Project Authors | GNU AGPL v3 (`LICENSE` in the folder) | https://github.com/aliftype/qashib (release v2.00) |
+| Qahiri 4.000 | `Kufic (later style - not Birmingham)/Qahiri/` | © 2021 The Qahiri Project Authors | SIL Open Font License 1.1 (`OFL.txt` in the folder) | https://github.com/aliftype/qahiri (release v4.00) |
+| hijazi 1.00 | `Hijazi - general (Khalid Alabdullah, 2019)/` | © 2019 Khalid Alabdullah | Creative Commons Attribution-NonCommercial 4.0 International, https://creativecommons.org/licenses/by-nc/4.0/ | https://github.com/khalidalabdullah/hijazifont |
 
 The font files are copied from the release archives or repositories named above
 and have not been modified.
@@ -22,7 +22,7 @@ no charge from the repositories above, at the tags `v2.00`.
 
 ## Photographs of the Birmingham Qur'an manuscript
 
-The files in `Birmingham Hijazi (فۆنتی نوێ - لەسەر مانوسکریپتی بیرمینگهام)/source/manuscript/`,
+The files in `Birmingham Hijazi (new - from the Birmingham manuscript)/source/manuscript/`,
 and the crops of them in that folder's `source/audit/`, are photographs of the
 Birmingham Qur'an manuscript (Cadbury Research Library, University of Birmingham,
 Mingana Islamic Arabic 1572a). They were downloaded from Wikimedia Commons, where
