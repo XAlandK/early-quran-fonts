@@ -3,19 +3,21 @@
 # Copyright (c) 2026 Aland Kawa Ali
 # Licensed under AANCL v1.0. See the LICENSE file.
 """
-Birmingham Hijazi — build script (version 3).
+Birmingham Hijazi — build script (version 4).
 
 The letterforms are not drawn: they are the outlines of the scribe's ink,
 traced by tracer.py from the photograph of the Birmingham Qur'an manuscript
-(Cadbury Research Library, Mingana Islamic Arabic 1572a) and stored in
-traced.json.  This script turns them into a font:
+(Cadbury Research Library, Mingana Islamic Arabic 1572a) and, for the nine
+forms that do not occur on its two large pages, from the leaves of the same
+Qur'an in Paris (BnF Arabe 328, folios 71-86), and stored in traced.json.
+This script turns them into a font:
 
   * every Arabic letter takes its four shapes from the traced forms;
-  * the few forms that do not occur on the two leaves are assembled from
-    traced pieces (see DERIVED below);
-  * dots, hamzas, vowel signs, digits and punctuation, which the manuscript
-    either writes as small dashes or does not have at all, are drawn with a pen
-    of the same weight;
+  * a form that is missing from traced.json is assembled from traced pieces
+    (see DERIVED below; with the Paris leaves none is missing);
+  * a dot is the manuscript's own short slanted dash, traced by dashes.py, at
+    the distances it measured; hamzas, vowel signs, digits and punctuation,
+    which the manuscript does not have, are drawn with a pen of the same weight;
   * Arabic shaping (init / medi / fina, lam-alef), mark positioning and two
     stylistic sets are added:
         ss01  rasm only: no dots, hamzas or small v's, as in the manuscript
@@ -195,23 +197,30 @@ JIM_TAIL = [(20, BL), (-260, BL), (-470, BL - 2), (-540, BL - 14), (-566, BL - 5
 
 
 def _derived():
+    """Forms assembled from traced pieces.  Since the Paris leaves of the manuscript were
+    added, all nine are traced from the ink like the rest; these are only made for a form
+    that is missing from traced.json (for instance when the Paris pictures have not been
+    downloaded and tracer.py was run without them)."""
     d = {}
-    # mim on its own: the final form without the stroke that joined it
-    d['MEEM.isol'] = strip_right('MEEM.fina', TRACED['MEEM.fina'][0] - 62)
-    d['QAF.isol'] = strip_right('QAF.fina', TRACED['QAF.fina'][0] - 30)
-    d['AIN.isol'] = strip_right('AIN.fina', TRACED['AIN.fina'][0] - 70)
-    # sad and ta' at the end of a word: the free-standing form, joined
-    d['SAD.fina'] = add_right_join('SAD.isol')
-    d['TAH.fina'] = add_right_join('TAH.isol')
-    # fa' at the end of a word: its loop, then the flat tail the scribe gives ba'
-    d['FEH.fina'] = add_left_tail('FEH.medi', FLAT_TAIL)
-    a, g = add_left_tail('FEH.init', FLAT_TAIL)
-    d['FEH.isol'] = (a, g)
-    # jim / ha' / kha' at the end of a word.  The two leaves have none; folio 2 verso
-    # (تخرج, Q 20:22) shows the head of the initial form on a long stroke that runs
-    # on to the left and ends in a small downward hook.
-    d['HAH.fina'] = add_left_tail('HAH.medi', JIM_TAIL)
-    d['HAH.isol'] = add_left_tail('HAH.init', JIM_TAIL)
+    make = {
+        # mim on its own: the final form without the stroke that joined it
+        'MEEM.isol': lambda: strip_right('MEEM.fina', TRACED['MEEM.fina'][0] - 62),
+        'QAF.isol': lambda: strip_right('QAF.fina', TRACED['QAF.fina'][0] - 30),
+        'AIN.isol': lambda: strip_right('AIN.fina', TRACED['AIN.fina'][0] - 70),
+        # sad and ta' at the end of a word: the free-standing form, joined
+        'SAD.fina': lambda: add_right_join('SAD.isol'),
+        'TAH.fina': lambda: add_right_join('TAH.isol'),
+        # fa' at the end of a word: its loop, then the flat tail the scribe gives ba'
+        'FEH.fina': lambda: add_left_tail('FEH.medi', FLAT_TAIL),
+        'FEH.isol': lambda: add_left_tail('FEH.init', FLAT_TAIL),
+        # jim / ha' / kha' at the end of a word: the head of the initial form on a long
+        # stroke that runs on to the left and ends in a small downward hook
+        'HAH.fina': lambda: add_left_tail('HAH.medi', JIM_TAIL),
+        'HAH.isol': lambda: add_left_tail('HAH.init', JIM_TAIL),
+    }
+    for key, fn in make.items():
+        if key not in TRACED:
+            d[key] = fn()
     return d
 
 
@@ -266,13 +275,24 @@ ANCHOR_BELOW = {}
 # --------------------------------------------------------------------------
 # Small marks: i'jam dashes, hamza, madda, v, wasla
 # --------------------------------------------------------------------------
-DRX, DRY = 15, 13        # nib for dots and marks
-DASH = 40                # half length of an i'jam dash
-DSTEP = 50               # distance between stacked dashes
+DRX, DRY = 15, 13        # nib for the marks the manuscript does not have
+PXU = 0.225              # manuscript pixels per font unit (tracer.PXU)
+
+# The dot of the manuscript is a short slanted dash.  dashes.py measures the dashes that
+# stand free on the two Birmingham pages and traces the one nearest to their median
+# length, thickness and slant; the distances are the medians it measured.
+with open(os.path.join(HERE, 'dash.json'), encoding='utf-8') as fh:
+    _DASH = json.load(fh)
+DASH_GEOM = wkt.loads(_DASH['wkt'])
+_mid = DASH_GEOM.intersection(box(-4, -999, 4, 999)).bounds
+DSTEP = _DASH['stack_down'] / PXU                 # from one dash of a letter to the next
+DSHIFT = _DASH['stack_right'] / PXU               # ... the lower one stands this far to the right
+DOT_OFF = _DASH['gap'] / PXU + (_mid[3] - _mid[1]) / 2 - 64   # the nearest dash, beyond the anchor of the letter
 
 
 def dash(g, cx, cy):
-    g.s([(cx - DASH, cy - 15), (cx + DASH, cy + 15)], rx=DRX, ry=DRY)
+    g.parts.append(translate(DASH_GEOM, cx, cy))
+    return g
 
 
 def dots(g, n, where, pos=None):
@@ -280,7 +300,7 @@ def dots(g, n, where, pos=None):
     cx, cy = pos or (g.above if where == 'above' else g.below)
     d = 1 if where == 'above' else -1
     for i in range(n):
-        dash(g, cx + d * i * 9, cy + d * i * DSTEP)
+        dash(g, cx - d * i * DSHIFT, cy + d * (DOT_OFF + i * DSTEP))
 
 
 def vmark(g, cx, cy):
@@ -445,10 +465,11 @@ def g_hamza():
 
 def g_verse_end():
     """Cluster of slanted dashes that closes a verse in the manuscript."""
-    g = G(330)
-    for i, cx in enumerate((112, 222)):
-        for j, cy in enumerate((40, 96, 152)):
-            dash(g, cx + j * 8, cy + i * 14)
+    down, right, beside = (_DASH[k] / PXU for k in ('verse_down', 'verse_right', 'verse_beside'))
+    g = G(round(beside + 220))
+    for i in range(2):                              # two columns of three, as most of them are
+        for j in range(3):
+            dash(g, 110 + i * beside - (j - 1) * right, 40 + down + (j - 1) * down + i * 14)
     return g
 
 
@@ -826,17 +847,18 @@ def build(out_path):
     fb.setupNameTable({
         "familyName": "Birmingham Hijazi",
         "styleName": "Regular",
-        "uniqueFontIdentifier": "BirminghamHijazi-Regular-3.000",
+        "uniqueFontIdentifier": "BirminghamHijazi-Regular-4.000",
         "fullName": "Birmingham Hijazi Regular",
         "psName": "BirminghamHijazi-Regular",
-        "version": "Version 3.000",
+        "version": "Version 4.000",
         "copyright": "Copyright (c) 2026 Aland Kawa Ali",
         "licenseDescription": ("Licensed under the Aland Attribution & Non-Commercial License (AANCL) v1.0. "
                                "Attribution is required; commercial use requires prior written permission. "
                                "See the LICENSE file."),
         "licenseInfoURL": "https://github.com/XAlandK/early-quran-fonts/blob/main/LICENSE",
         "description": ("Hijazi typeface whose letterforms are traced from the ink of the Birmingham "
-                        "Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a). "
+                        "Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a) and "
+                        "of the leaves of the same Qur'an in Paris (BnF Arabe 328, ff. 71-86). "
                         "ss01: rasm only (no dots). ss02: hide vowel marks."),
     })
     fb.setupOS2(sTypoAscender=820, sTypoDescender=-460, sTypoLineGap=300,

@@ -39,8 +39,9 @@ FONTS = [
     # css name, path, title, (subtitle ckb, en), [(tag ckb, en)], (badge ckb, en) or None
     # (fonts with a badge are ours and have ss01 / ss02)
     ("Birmingham Hijazi", f"{BH_DIR}/BirminghamHijazi-Regular.ttf", "Birmingham Hijazi",
-     ("وەشانی ٣ — پیتەکان ڕاستەوخۆ لە مەرەکەبی دەستنووسی بیرمینگهام هێڵکاری کراون",
-      "Version 3 — the letters are traced directly from the ink of the Birmingham manuscript"),
+     ("وەشانی ٤ — پیتەکان ڕاستەوخۆ لە مەرەکەبی دەستنووسی بیرمینگهام و پەڕەکانی هەمان مصحف لە پاریس هێڵکاری کراون",
+      "Version 4 — the letters are traced directly from the ink of the Birmingham manuscript "
+      "and of the leaves of the same Qur'an in Paris"),
      [("خەتی حیجازی", "Hijazi script"), ("سەدەی یەکەمی کۆچی (٥٦٨–٦٤٥ ز)", "1st century AH (568–645 CE)"),
       ("ss01 · ss02", "ss01 · ss02"), ("کوردیش دەنووسێت", "Writes Kurdish too")],
      ("نوێ", "New")),
@@ -98,25 +99,26 @@ RASM = [("ALIF", "ا"), ("BEH", "ب ت ث"), ("NOON", "ن"), ("YEH", "ی"), ("HA
         ("LAMALEF", "لا")]
 FORM = [("isol", "تەنها", "isolated"), ("init", "سەرەتا", "initial"),
         ("medi", "ناوەڕاست", "medial"), ("fina", "کۆتایی", "final")]
-DERIVED = [
-    ("م", ("تەنها", "isolated"),
-     ("«م»ی کۆتایی، بێ ئەو هێڵەی کە بە پیتی پێشووەوە دەیبەستێت",
-      "final mim, without the stroke that joins it to the letter before")),
-    ("ق", ("تەنها", "isolated"), ("«ق»ی کۆتایی، بێ هێڵی بەستنەکە", "final qaf, without the joining stroke")),
-    ("ع غ", ("تەنها", "isolated"), ("«ع»ی کۆتایی، بێ هێڵی بەستنەکە", "final 'ayn, without the joining stroke")),
-    ("ص ض", ("کۆتایی", "final"), ("«ص»ی تەنها، لەگەڵ هێڵی بەستن لە لای ڕاست",
-                                  "isolated sad, with a joining stroke on the right")),
-    ("ط ظ", ("کۆتایی", "final"), ("«ط»ی تەنها، لەگەڵ هێڵی بەستن لە لای ڕاست",
-                                  "isolated ta', with a joining stroke on the right")),
-    ("ف", ("کۆتایی و تەنها", "final and isolated"),
-     ("بازنەی «ف»ی بڕدراو، لەگەڵ کلکێکی تەخت وەک کلکی «ب»",
-      "the loop of fa', cut out, with a flat tail like the tail of ba'")),
-    ("ج ح خ", ("کۆتایی و تەنها", "final and isolated"),
-     ("سەری «ح»ی بڕدراو، لەگەڵ هێڵێکی درێژ بەرەو چەپ کە بە قولاپێکی بچووک "
-      "کۆتایی دێت — وەک وشەی «تخرج» لە پەڕەی ٢ پشت (وێنەکەی وردیی کەمترە)",
-      "the head of ha', cut out, with a long stroke to the left that ends in a small hook — "
-      "as in the word «تخرج» on folio 2v (a less detailed photograph)")),
+# the nine forms that do not occur on the two large Birmingham pages: where each was found
+# on the leaves of the same Qur'an in Paris (BnF Arabe 328, folios 71-86)
+PARIS = [
+    ("MEEM.isol", "م", ("تەنها", "isolated"), "قوم", ("هود ٨٩", "Q 11:89"), "77r"),
+    ("QAF.isol", "ق", ("تەنها", "isolated"), "ورزق", ("طه ١٣١", "Q 20:131"), "79r"),
+    ("AIN.isol", "ع غ", ("تەنها", "isolated"), "تجوع", ("طه ١١٨", "Q 20:118"), "78v"),
+    ("SAD.fina", "ص ض", ("کۆتایی", "final"), "متربص", ("طه ١٣٥", "Q 20:135"), "79r"),
+    ("TAH.fina", "ط ظ", ("کۆتایی", "final"), "محيط", ("هود ٨٤", "Q 11:84"), "77r"),
+    ("FEH.fina", "ف", ("کۆتایی", "final"), "كيف", ("يونس ٣٥", "Q 10:35"), "71r"),
+    ("FEH.isol", "ف", ("تەنها", "isolated"), "سوف", ("هود ٩٣", "Q 11:93"), "77r"),
+    ("HAH.fina", "ج ح خ", ("کۆتایی", "final"), "صلح", ("هود ٨٩", "Q 11:89"), "77r"),
+    ("HAH.isol", "ج ح خ", ("تەنها", "isolated"), "ينوح", ("هود ٣٢", "Q 11:32"), "75r"),
 ]
+PARIS_AT = {p[0]: p for p in PARIS}
+
+
+def folio(f):
+    """'77r' -> ('٧٧ ڕوو', '77r')"""
+    return ku(f[:-1]) + (" ڕوو" if f[-1] == "r" else " پشت"), f
+
 
 LETTERS = "ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي ى ة پ چ ژ ڕ ڤ ک گ ڵ ە ۆ ی ێ".split()
 DUAL = set("ب ت ث ج ح خ س ش ص ض ط ظ ع غ ف ق ك ل م ن ه ي ى پ چ ڤ ک گ ڵ ی ێ")
@@ -202,6 +204,16 @@ def letter_cell(letters, form, pic, where):
 
 def derived_list(items):
     return "".join('<li><b dir="rtl">%s</b> (%s): %s</li>' % (html.escape(a), Lx(b), Lx(c)) for a, b, c in items)
+
+
+def paris_list():
+    out = []
+    for key, letters, form, word, verse, f in PARIS:
+        out.append('<li><b dir="rtl">%s</b> (%s): %s</li>' % (
+            html.escape(letters), Lx(form),
+            L('لە وشەی «<span dir="rtl">%s</span>» (%s)، پەڕەی %s' % (html.escape(word), html.escape(verse[0]), folio(f)[0]),
+              'from the word «<span dir="rtl">%s</span>» (%s), folio %s' % (html.escape(word), verse[1], f))))
+    return "".join(out)
 
 
 MN_LINES = [   # line of prep's page, x0, x1, text as carved, caption
@@ -312,15 +324,23 @@ def main():
             if key not in traced or key not in arow:
                 continue
             s = traced[key]["src"]
-            ln = text_line(s["page"], s["line"])
             e = "%.2f" % arow[key]["edge"]
-            where = L("%s، هێڵی %s · جیاوازیی لێوار %s px" % ("پەڕەی ٢ ڕوو" if s["page"] == "L" else "پەڕەی ١ پشت", ku(ln), ku(e)),
-                      "%s, line %s · edge difference %s px" % ("folio 2r" if s["page"] == "L" else "folio 1v", ln, e))
+            if key in PARIS_AT:                    # one of the nine forms from the Paris leaves
+                _, _, _, word, verse, f = PARIS_AT[key]
+                where = L("پاریس، پەڕەی %s، «%s» (%s) · جیاوازیی لێوار %s px" % (folio(f)[0], html.escape(word), verse[0], ku(e)),
+                          "Paris, folio %s, «%s» (%s) · edge difference %s px" % (f, html.escape(word), verse[1], e))
+            else:
+                ln = text_line(s["page"], s["line"])
+                where = L("%s، هێڵی %s · جیاوازیی لێوار %s px" % ("پەڕەی ٢ ڕوو" if s["page"] == "L" else "پەڕەی ١ پشت", ku(ln), ku(e)),
+                          "%s, line %s · edge difference %s px" % ("folio 2r" if s["page"] == "L" else "folio 1v", ln, e))
             with open(os.path.join(HERE, "audit", key + ".jpg"), "rb") as fh:
                 pic = base64.b64encode(fh.read()).decode("ascii")
             cells.append(letter_cell(letters, form, pic, where))
     am = audit["mean"]
     worst = max(audit["rows"], key=lambda r: r["edge"])
+    var = json.load(open(os.path.join(HERE, "audit", "variation.json")))["summary"]
+    dash = json.load(open(os.path.join(HERE, "dash.json")))
+    px = lambda v, f="%.1f": num(f % v, " px")
 
     cards = []
     for css, path, title, sub, tags, badge in FONTS:
@@ -349,7 +369,14 @@ def main():
     for k, v in {
         "%%PRESET_BTNS%%": preset_btns, "%%PRESETS%%": presets_js, "%%CARDS%%": "\n".join(cards),
         "%%LINES%%": "\n".join(lines_html), "%%CELLS%%": "\n".join(cells), "%%NTRACED%%": num(len(cells)),
-        "%%DERIVED%%": derived_list(DERIVED), "%%A_EDGE%%": num("%.2f" % am["edge"], " px"),
+        "%%PARIS%%": paris_list(), "%%A_EDGE%%": num("%.2f" % am["edge"], " px"),
+        "%%V_N%%": num(var["instances"]), "%%V_SCRIBE%%": px(var["scribe"], "%.2f"),
+        "%%V_FONT%%": px(var["font"], "%.2f"),
+        "%%X_N%%": num(var.get("cross_paris", 0)), "%%X_WITHIN%%": px(var.get("within", 0), "%.2f"),
+        "%%X_ACROSS%%": px(var.get("across", 0), "%.2f"),
+        "%%D_N%%": num(dash["n"]), "%%D_LEN%%": px(dash["length"]), "%%D_THICK%%": px(dash["thickness"]),
+        "%%D_ANGLE%%": num("%.0f" % dash["angle"], "°"), "%%D_STACK%%": px(dash["stack_down"]),
+        "%%D_GAP%%": px(dash["gap"]),
         "%%A_P95%%": num("%.2f" % am["p95"], " px"),
         "%%A_AREA%%": L(ku("%.1f" % (abs(am["area"] - 1) * 100)) + "٪", "%.1f%%" % (abs(am["area"] - 1) * 100)),
         "%%A_WORST%%": num("%.2f" % worst["edge"], " px"), "%%FORMS%%": forms_table(),
@@ -500,16 +527,18 @@ a{color:var(--accent)}
   <div class="stat"><b>%%A_AREA%%</b><span>[[جیاوازیی ڕووبەری پیتەکان||Difference in the area of the letters]]</span></div>
   <div class="stat"><b>%%A_WORST%%</b><span>[[خراپترین پیت (تێکڕای لێوارەکەی)||The worst letter (its mean edge distance)]]</span></div>
 </div>
+<p class="note">[[نووسەرەکە خۆی هیچ پیتێکی دوو جار وەک یەک نەنووسیوە. %%V_N%% نموونەی پیتەکان لە هەموو لاپەڕەکان هێڵکاری کران و هەر دووانێکی هەمان پیت لەسەر یەک دانران: دوو نموونەی هەمان پیت بە دەستی نووسەرەکە بە ناوەندی %%V_SCRIBE%% لە یەکتر دوورن، و نموونەی فۆنتەکە %%V_FONT%% لە نموونەکانی تر دوورە. واتە پیتەکانی فۆنتەکە نموونەی ئاسایی نووسەرەکەن، و دووریی فۆنتەکە لە نموونەکەی خۆی زۆر لە جیاوازیی نێوان دوو پیتی نووسەرەکە خۆی کەمترە.||The scribe never wrote a letter twice in the same way. %%V_N%% instances of the letters were traced on all the pages and every two of the same letter laid over each other: two instances of a letter in the scribe's hand are typically %%V_SCRIBE%% apart, and the instance the font uses is %%V_FONT%% from the others. So the letters of the font are ordinary instances of the scribe's writing, and the font is far closer to its own exemplar than two letters of the scribe are to each other.]]</p>
 <p class="legend">[[لە هەر خانەیەکدا سێ وێنە هەیە. چەپ: پیتەکە لە دەستنووسەکەدا. ناوەڕاست: هەمان وێنە، لێواری مەرەکەب بە <span class="key" style="background:#00c8ff"></span>شینی کاڵ و لەسەری لێواری فۆنتەکە بە <span class="key" style="background:#ff1e1e"></span>سوور. ڕاست: جیاوازییەکە — <span class="key" style="background:#3c2818"></span>هەردووکیان، <span class="key" style="background:#0096ff"></span>مەرەکەب هەیە و فۆنت نییە، <span class="key" style="background:#ff3c28"></span>فۆنت هەیە و مەرەکەب نییە، <span class="key" style="background:#e1e1e1"></span>شوێنی پەیوەستبوون (لە پێوانەکە دەرکراوە، چونکە لەوێ ئەستووریی هێڵەکە یەکسان کراوە).||Each cell holds three pictures. Left: the letter in the manuscript. Middle: the same picture, with the edge of the ink in <span class="key" style="background:#00c8ff"></span>light blue and the edge of the font over it in <span class="key" style="background:#ff1e1e"></span>red. Right: the difference — <span class="key" style="background:#3c2818"></span>both, <span class="key" style="background:#0096ff"></span>ink where the font has none, <span class="key" style="background:#ff3c28"></span>font where there is no ink, <span class="key" style="background:#e1e1e1"></span>the joins (left out of the measurement, because the stroke is given one thickness there).]]</p>
 <div class="grid">
 %%CELLS%%
 </div>
 
-<h2>[[ئەو شێوانەی لەم دوو پەڕەیەدا نین||Forms that are not on these two leaves]]</h2>
+<h2>[[نۆ شێوە لە پەڕەکانی پاریسەوە||Nine forms from the Paris leaves]]</h2>
 <section class="card">
-<p class="note">[[ئەم شێوانە لە دوو پەڕە وردەکەی دەستنووسەکەدا نەهاتوون، بۆیە لە پارچە بڕدراوەکان دروستکراون:||These forms do not occur on the two high-resolution leaves of the manuscript, so they were assembled from traced pieces:]]</p>
-<ul class="plain">%%DERIVED%%</ul>
-<p class="note">[[خاڵەکان وەک دەستنووسەکە هێڵی بچووکی لارن. هەمزە، بزوێنەکان، ژمارەکان، نیشانەکانی خاڵبەندی و نیشانە کوردییەکان (ڤ ی سەر ڵ ڕ ۆ ێ، هێڵی دووەمی گ) لە دەستنووسەکەدا نین و بە هەمان ئەستووری کێشراون.||Dots are small slanted strokes, as in the manuscript. Hamza, vowel marks, digits, punctuation and the Kurdish marks (the small v of ڵ ڕ ۆ ێ and the second stroke of گ) do not occur in the manuscript and are drawn at the same weight.]]</p>
+<p class="note">[[دەستنووسی بیرمینگهام دوو پەڕەیە لە مصحفێک کە شازدە پەڕەی تری لە پاریسن (کتێبخانەی نیشتمانیی فەڕەنسا، Arabe 328، پەڕەکانی ٧١–٨٦). لە چوار لاپەڕەکەی بیرمینگهام تەنها دووانیان بە وێنەی گەورە بڵاو کراونەتەوە، و ئەم نۆ شێوەیە لەو دوو لاپەڕەیەدا نەهاتوون. لە وەشانی ٣دا لە پارچەی پیتەکانی تر دروست کرابوون؛ ئێستا وەک هەموو پیتەکانی تر ڕاستەوخۆ لە مەرەکەبی هەمان نووسەر هێڵکاری کراون:||The Birmingham manuscript is two leaves of a Qur'an of which sixteen more leaves are in Paris (Bibliothèque nationale de France, Arabe 328, folios 71–86). Only two of the four Birmingham pages have been published in a large photograph, and these nine forms do not occur on them. In version 3 they were assembled from pieces of other letters; now they are traced from the ink of the same scribe, like all the others:]]</p>
+<ul class="plain">%%PARIS%%</ul>
+<p class="note">[[بۆ ئەوەی دڵنیا بین کە پەڕەکانی پاریس هەمان دەستخەتن، %%X_N%% پیتی تریشیان لێ هێڵکاری کرا و لەگەڵ هەمان پیت لە بیرمینگهام بەراورد کران: دووریی نێوان پیتێکی پاریس و پیتێکی بیرمینگهام %%X_ACROSS%%ـە، و دووریی نێوان دوو پیتی بیرمینگهام خۆیان %%X_WITHIN%%ـە. نووسەرەکە لە هەندێک لاپەڕەی پاریسدا بچووکتر نووسیویەتی؛ ئەو لاپەڕانە بە پێی پێوانە گەورە کراونەتەوە تا پیتەکانیان بە قەبارەی پیتەکانی بیرمینگهام بن.||To make sure the Paris leaves are in the same hand, %%X_N%% other letters were traced from them and compared with the same letters in Birmingham: a Paris letter is %%X_ACROSS%% from a Birmingham letter, and two Birmingham letters are %%X_WITHIN%% from each other. On some of the Paris pages the scribe wrote smaller; those pages are enlarged, by a measured amount, so that their letters have the size of the Birmingham letters.]]</p>
+<p class="note">[[خاڵەکان: نووسەرەکە خاڵ وەک هێڵێکی بچووکی لار دەنووسێت. %%D_N%% خاڵی دەستنووسەکە پێوران (درێژی %%D_LEN%%، ئەستووری %%D_THICK%%، لاری %%D_ANGLE%%)؛ خاڵی فۆنتەکە هێڵکاریی ئەو خاڵەیە کە لە هەموویان نزیکترە لە ناوەند، و دووریی خاڵەکان لە یەکتر (%%D_STACK%%) و لە پیتەکەیان (%%D_GAP%%) هەمان دووریی پێوراوە. هەمزە، بزوێنەکان، ژمارەکان، نیشانەکانی خاڵبەندی و نیشانە کوردییەکان (ڤ ی سەر ڵ ڕ ۆ ێ، هێڵی دووەمی گ) لە دەستنووسەکەدا نین و بە هەمان ئەستووری کێشراون.||Dots: the scribe writes a dot as a short slanted dash. %%D_N%% dashes of the manuscript were measured (length %%D_LEN%%, thickness %%D_THICK%%, slant %%D_ANGLE%%); the dot of the font is the traced outline of the dash nearest to the middle of them all, and the dashes stand as far from each other (%%D_STACK%%) and from their letter (%%D_GAP%%) as was measured. Hamza, vowel marks, digits, punctuation and the Kurdish marks (the small v of ڵ ڕ ۆ ێ and the second stroke of گ) do not occur in the manuscript and are drawn at the same weight.]]</p>
 </section>
 
 <h2>Madinah Naqsh — [[نەخشی بەردی الأحزاب ٧٠–٧١||the rock inscription of al-Ahzab 70–71]]</h2>

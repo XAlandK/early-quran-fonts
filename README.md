@@ -6,17 +6,18 @@ taken from photographs of the original ink and carving, not redrawn.
 فۆنتگەلێک کە پیتەکانیان لە کۆنترین دەقە نووسراوەکانی قورئانەوە هێڵکاری کراون:
 شێوەی پیتەکان لە وێنەی مەرەکەب و هەڵکۆڵینە ڕەسەنەکانەوە وەرگیراون، نەک بە دەست کێشراون.
 
-![Text set in Birmingham Hijazi: the basmala and the opening of Sura Ta-Ha without dots, the basmala with vowel marks, a line of Kurdish, and the Arabic alphabet](docs/images/birmingham-hijazi-specimen.png)
+![Text set in Birmingham Hijazi: the basmala and the opening of Sura Ta-Ha without dots, the basmala with vowel marks, a line of Kurdish, the words the nine Paris forms come from, and the Arabic alphabet](docs/images/birmingham-hijazi-specimen.png)
 
 *Birmingham Hijazi. The first two lines are set without dots (`ss01`), as the
 manuscript is written; then the basmala with vowel marks, a line of Kurdish,
-and the alphabet.*
+the words that the nine forms from the Paris leaves were taken from, and the
+alphabet.*
 
 ## Fonts
 
 | Font | Source | Status |
 |---|---|---|
-| [Birmingham Hijazi](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29) | The Birmingham Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a), parchment dated 568–645 CE | Version 3.000 — 53 letter forms traced from the manuscript and checked against it pixel by pixel ([README](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/README.txt)) |
+| [Birmingham Hijazi](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29) | The Birmingham Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a), parchment dated 568–645 CE, and the leaves of the same Qur'an in Paris (BnF Arabe 328, folios 71–86) | Version 4.000 — all 62 letter forms and the dots traced from the manuscript and checked against it pixel by pixel ([README](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/README.txt)) |
 | [Madinah Naqsh](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29) | A rock inscription near Medina carrying Qur'an 33:70–71 | Draft 0.100 — 28 letter forms traced from a small photograph ([README](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29/README.txt)) |
 
 Both fonts write Arabic and Kurdish (Sorani), have Arabic joining, lam-alef,
@@ -37,13 +38,40 @@ set in the font at the same size.*
 
 ![The pixel audit for nine letters: each letter in the manuscript, the edges of the ink and of the font laid over each other, and the difference](docs/images/birmingham-hijazi-audit.jpg)
 
-*The pixel audit, shown for nine of the 53 traced letter forms. By row, left
+*The pixel audit, shown for nine of the 62 traced letter forms. By row, left
 to right: alif ا and waw و; lam-alif لا and final ha ـه; medial ain ـعـ and
 medial ta ـطـ; kaf ک and initial lam لـ; sad ص. Each set of three shows the letter in the manuscript; the same
 picture with the edge of the ink in light blue and the edge of the font in
 red; and the difference (blue: ink the font lacks, red: font where there is
-no ink, grey: the joins, which are left out). Over all 53 forms the font's edge
+no ink, grey: the joins, which are left out). Over all 62 forms the font's edge
 is on average 0.15 px of the photograph from the ink's edge.*
+
+![The pixel audit for the nine letter forms traced from the Paris leaves of the manuscript](docs/images/birmingham-hijazi-paris-forms.jpg)
+
+*The nine forms that do not occur on the two large Birmingham pages, traced
+from the leaves of the same Qur'an in Paris (BnF Arabe 328, folios 71–86;
+photographs: gallica.bnf.fr / Bibliothèque nationale de France). By row, left
+to right: isolated mim م (قوم) and isolated qaf ق (ورزق); isolated ain ع (تجوع)
+and isolated ha ح (ينوح); final ha ـح (صلح) and isolated fa ف (سوف); final fa ـف
+(كيف) and final sad ـص (متربص); final ta ـط (محيط).*
+
+What was measured, in pixels of the Birmingham photograph (one pixel is about
+0.085 mm of parchment):
+
+| Check | Result |
+|---|---|
+| The font against the letter it was traced from (62 forms) | 0.15 px on average; 95 % of the outline within 0.41 px |
+| Two instances of the same letter in the scribe's own hand (391 instances traced) | 2.00 px apart |
+| The letter the font uses against the scribe's other instances of it | 1.88 px |
+| A letter on the Paris leaves against the same letter in Birmingham (26 letters) | 1.85 px |
+| The dots: 319 dashes of the manuscript measured | length 24.0 px, thickness 7.6 px, slant 22.5°; the font's dot is one of them, traced |
+
+The scribe did not write every page at the same size: on three of the Paris
+pages the letters are smaller and the pen finer (0.83–0.89 of the Birmingham
+writing), and those pages are enlarged by that much before a letter is taken
+from them. The
+[README of the font](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/README.txt)
+describes each check and what in the font is not from the manuscript.
 
 ## Madinah Naqsh
 
@@ -55,7 +83,7 @@ from is not shown here, because it belongs to its photographer.*
 
 The figures are drawn by
 [`make_readme_figures.py`](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/source/make_readme_figures.py)
-from the fonts and the public-domain photographs of the manuscript.
+from the fonts and photographs of the manuscript.
 
 ## Other fonts in this repository
 
@@ -69,6 +97,10 @@ and under their own licenses: [Raqq, Qahiri and Qashib](Kufic%20%28later%20style
 The photographs of the Medina inscriptions belong to their photographer,
 Muhammad al-Maghdhawi ([@mohammed93athar](https://x.com/mohammed93athar)), and
 are not published here. The same goes for the preview page that embeds them.
+
+The photographs of the Paris leaves (93 MB) are not kept here either; the
+script `fetch_bnf.py` in the source folder of Birmingham Hijazi downloads them
+from the Bibliothèque nationale de France.
 
 ## License
 
@@ -84,8 +116,8 @@ selling the fonts, or using them in commercial products or paid services —
 requires prior written permission from the copyright holder.
 
 AANCL is a custom license. It is not an OSI-approved open-source license.
-Third-party fonts and public-domain photographs in this repository keep their
-own licenses or status; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Third-party fonts and photographs of the manuscripts in this repository keep
+their own licenses or status; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 **مۆڵەت:** ئەم پڕۆژەیە لە ژێر مۆڵەتی Aland Attribution & Non-Commercial License
 (AANCL) v1.0 دایە، مافی لەبەرگرتنەوە © 2026 بۆ Aland Kawa Ali. بەکارهێنانی
