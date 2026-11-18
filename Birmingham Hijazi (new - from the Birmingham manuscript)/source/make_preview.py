@@ -46,8 +46,8 @@ FONTS = [
       ("ss01 · ss02", "ss01 · ss02"), ("کوردیش دەنووسێت", "Writes Kurdish too")],
      ("نوێ", "New")),
     ("Madinah Naqsh", f"{MN_DIR}/MadinahNaqsh-Regular.ttf", "Madinah Naqsh",
-     ("وەشانی سەرەتایی ٠٫١ — لە نەخشێکی بەردی دەوری مەدینە (الأحزاب ٧٠–٧١) هێڵکاری کراوە",
-      "Draft 0.1 — traced from a rock inscription near Medina (al-Ahzab 70–71)"),
+     ("وەشانی سەرەتایی ٠٫٢ — هێڵی ناوەڕاست و ئەستووریی هەر هێڵێک لە نەخشێکی بەردی دەوری مەدینە (الأحزاب ٧٠–٧١)",
+      "Draft 0.2 — the centre line and width of every stroke, from a rock inscription near Medina (al-Ahzab 70–71)"),
      [("نەخشی بەرد", "Rock inscription"), ("٢٨ شێوەی هێڵکاریکراو، ٣٤ی دروستکراو", "28 forms traced, 34 assembled"),
       ("ss01 · ss02", "ss01 · ss02"), ("کوردیش دەنووسێت", "Writes Kurdish too")],
      ("سەرەتایی", "Draft")),
@@ -269,11 +269,12 @@ def madinah():
     out_lines = []
     for idx, x0, x1, text, cap in MN_LINES:
         r = lines[idx - 1]["r"]
+        sq = float(lines[idx - 1].get("squeeze", 1.0))          # the line is narrowed by this in the font
         im = Image.fromarray(page[r - up:r + dn, x0:x1])
-        im = im.resize((1200, int(im.height * 1200 / im.width)), Image.LANCZOS)
-        caption = L(html.escape(cap[0]) + " — سەرەوە نەخشەکە (ڕاستکراوە و گەورەکراو)، خوارەوە هەمان دەق بە فۆنتەکە بە هەمان قەبارە.",
-                    html.escape(cap[1]) + " — top: the inscription (levelled and enlarged); bottom: the same text in the font at the same size.")
-        out_lines.append(figure_line(1000 * T.PXU / (x1 - x0), cap, jpg(im, 80), text, caption, mn=True))
+        im = im.resize((1200, int(im.height * 1200 / (im.width * sq))), Image.LANCZOS)
+        caption = L(html.escape(cap[0]) + " — سەرەوە نەخشەکە (ڕاستکراوە، گەورەکراو و بە پێی لاری وێنەکە تەسککراو)، خوارەوە هەمان دەق بە فۆنتەکە بە هەمان قەبارە.",
+                    html.escape(cap[1]) + " — top: the inscription (levelled, enlarged, and narrowed for the slant of the photograph); bottom: the same text in the font at the same size.")
+        out_lines.append(figure_line(1000 * T.PXU / ((x1 - x0) * sq), cap, jpg(im, 80), text, caption, mn=True))
     cells = []
     for name, letters in RASM:
         for form, _, _ in FORM:
@@ -281,18 +282,19 @@ def madinah():
             if key not in traced or key not in arow:
                 continue
             ln = lines[traced[key]["src"]["line"] - 1]["name"]
-            e = "%.2f" % arow[key]["edge_photo"]
+            e = "%.2f" % arow[key]["crest"]
             with open(os.path.join(src, "audit", key + ".jpg"), "rb") as fh:
                 pic = base64.b64encode(fh.read()).decode("ascii")
-            where = L("هێڵی %s · جیاوازیی لێوار %s px ی وێنەکە" % (ku(ln), ku(e)),
-                      "line %s · edge difference %s px of the photograph" % (ln, e))
+            where = L("دێڕی %s · هێڵی ناوەڕاست %s px لە لووتکەی هەڵکۆڵینەکە" % (ku(ln), ku(e)),
+                      "line %s · centre line %s px from the crest of the carving" % (ln, e))
             cells.append(letter_cell(letters, form, pic, where))
     photo = Image.open(os.path.join(src, "naqsh", "photo.jpg")).convert("RGB")
     am = audit["mean"]
     return {
         "%%MN_PHOTO%%": jpg(photo, 80), "%%MN_LINES%%": "\n".join(out_lines), "%%MN_CELLS%%": "\n".join(cells),
-        "%%MN_N%%": num(len(cells)), "%%MN_EDGE%%": num("%.2f" % am["edge_photo"], " px"),
-        "%%MN_P95%%": num("%.2f" % am["p95_photo"], " px"), "%%MN_DERIVED%%": derived_list(MN_DERIVED),
+        "%%MN_N%%": num(len(cells)), "%%MN_EDGE%%": num("%.2f" % am["crest"], " px"),
+        "%%MN_P95%%": num("%.2f" % am["c95"], " px"), "%%MN_EDGE2%%": num("%.2f" % am["edge"], " px"),
+        "%%MN_DERIVED%%": derived_list(MN_DERIVED),
     }
 
 
@@ -548,22 +550,23 @@ a{color:var(--accent)}
     <figcaption>[[نەخشێکی بەرد لە دەوری مەدینە: ||A rock inscription near Medina: ]]<span dir="rtl">«بسم الله الرحمن الرحیم / یایها الذین امنوا اتقوا الله وقولوا / قولا سدیدا یصلح لکم اعملکم / ویغفر لکم ذنوبکم ومن یطع الله / ورسوله فقد فاز فوزا عظیما»</span>. [[دۆزینەوە، وێنەگرتن و خوێندنەوەی نەخشەکە: محمد المغذوی، ئەکاونتی «نوادر الآثار والنقوش»||Found, photographed and read by Muhammad al-Maghdhawi, of the account «نوادر الآثار والنقوش»]] (<a href="https://x.com/mohammed93athar" target="_blank" rel="noopener" dir="ltr">@mohammed93athar</a>) — <a href="https://x.com/mohammed93athar/status/1322206509770694656" target="_blank" rel="noopener">[[پۆستەکە||the post]]</a>. [[وێنەکە بۆ بەکارهێنانی خۆتە؛ بڵاوکردنەوەی پێویستی بە ڕەزامەندیی ئەوە.||The photograph is for your own use; publishing it needs his permission.]]</figcaption>
   </figure>
 </section>
-<p class="note">[[<b>ئەمە فۆنتێکی سەرەتاییە.</b> وێنەکە تەنها ١٠٢٤×٦٧٣ پیکسڵە و لە گۆشەیەکەوە گیراوە، بۆیە پیتەکان تێیدا تەنها ٣٠ تا ٧٠ پیکسڵ بەرزن و هێڵەکانی خوارەوە گەورەترن لە سەرەوە. فۆنتەکە شێوەی گشتیی هەڵکۆڵینەکە دەگرێت، نەک وردەکاریی لێوارەکانی. تەنها سێ هێڵی خوارەوە بەکارهاتوون؛ دوو هێڵی سەرەوە زۆر بچووکن.||<b>This is a draft font.</b> The photograph is only 1024×673 pixels and was taken at an angle, so its letters are only 30 to 70 pixels tall and the lower lines are larger than the upper ones. The font follows the overall shape of the carving, not the detail of its edges. Only the three lower lines are used; the two upper lines are too small.]]</p>
+<p class="note">[[<b>ئەمە فۆنتێکی سەرەتاییە (وەشانی ٠٫٢).</b> وێنەکە تەنها ١٠٢٤×٦٧٣ پیکسڵە: ئەلفێک تێیدا ٤٠ تا ٧٠ پیکسڵ بەرزە و هێڵێکی ئاسۆیی ٤ تا ٦ پیکسڵ پانە. لێواری پیتەکان لە وێنەکەدا زۆربەی تەڵخیی وێنەکەیە، بۆیە فۆنتەکە لێوار هێڵکاری ناکات. لە جیاتی ئەوە دوو شت لە وێنەکەوە وەردەگرێت کە تەڵخی نایانگۆڕێت: هێڵی ناوەڕاستی هەر هێڵێک و ئەستوورییەکەی، و هێڵەکە بە لێواری پاک دەکێشێتەوە. هێڵە ئاسۆییەکان هەموو یەک ئەستوورین؛ ئەلف، لام و ددانەکان یەک و نیو تا دوو هێندە پانن، وەک لە بەردەکەدا. تەنها سێ دێڕی خوارەوە بەکارهاتوون.||<b>This is a draft font (version 0.2).</b> The photograph is only 1024×673 pixels: an alif is 40 to 70 pixels tall in it and a level stroke 4 to 6 wide. The edge of a letter in the photograph is mostly the blur of the photograph, so the font does not trace edges. It takes from the photograph two things that blur does not move, the centre line of every stroke and its width, and draws the stroke again with a clean edge. Level strokes all have one width; the stems of alif and lam and the teeth are one and a half times to twice as wide, as on the stone. Only the three lower lines are used.]]</p>
+<p class="note">[[وێنەکە بە لاری گیراوە: دێڕەکانی سەرەوە دوورترن و پەستێوراون. بۆیە پیتەکانی دێڕی چوارەم بە ٠٫٨٤ و دێڕی سێیەم بە ٠٫٧٧ تەسک کراونەتەوە. ئەم دوو ژمارەیە لە یاسایەکەوە هاتوون (ڕوویەکی تەخت کە بە لاری دەبینرێت) و تا ١٠٪ هەڵەیان دەشێت. دێڕی خوارەوە خۆیشی بە لاری بینراوە بە بڕێک کە لە یەک وێنەوە نازانرێت؛ لەوانەیە هەموو پیتەکان ١٠ تا ٣٥٪ پانتر بن لەوەی لەسەر بەردەکەن.||The photograph looks along the rock: the upper lines are further away and foreshortened. The letters of the fourth line are therefore narrowed by 0.84 and those of the third by 0.77. Those two figures come from a rule (a flat face seen at a slant) and may be off by up to a tenth. The lowest line is itself seen at a slant, by an amount one photograph cannot give; all letters may be 10 to 35% wider than on the stone.]]</p>
 %%MN_LINES%%
 <div class="stats">
   <div class="stat"><b>%%MN_N%%</b><span>[[شێوەی پیت لە نەخشەکە هێڵکاری کراون||letter forms traced from the inscription]]</span></div>
   <div class="stat"><b>[[٣٤||34]]</b><span>[[شێوە لە پارچەکان دروستکراون||forms assembled from pieces]]</span></div>
-  <div class="stat"><b>%%MN_EDGE%%</b><span>[[تێکڕای دووریی لێواری فۆنت لە لێواری هەڵکۆڵینەکە، بە پیکسڵی وێنەکە||mean distance between the font's edge and the carving's edge, in pixels of the photograph]]</span></div>
-  <div class="stat"><b>%%MN_P95%%</b><span>[[٩٥٪ی لێوارەکان لەمە نزیکترن||95% of the edges are closer than this]]</span></div>
+  <div class="stat"><b>%%MN_EDGE%%</b><span>[[تێکڕای دووریی هێڵی ناوەڕاستی فۆنت لە ڕووناکترین هێڵی هەڵکۆڵینەکە، بە پیکسڵی وێنەکە||mean distance of the font's centre line from the brightest line of the carving, in pixels of the photograph]]</span></div>
+  <div class="stat"><b>%%MN_P95%%</b><span>[[٩٥٪ی هێڵی ناوەڕاست لەمە نزیکترە||95% of the centre line is closer than this]]</span></div>
 </div>
-<p class="legend">[[هەمان سێ وێنەی سەرەوە: پیتەکە لە نەخشەکەدا، لێواری هەڵکۆڵینەکە (شینی کاڵ) و لێواری فۆنتەکە (سوور) لەسەری، و جیاوازییەکە. ژمارەکان بچووکن چونکە هەر پیکسڵێکی وێنەکە بەشێکی گەورەی پیتەکەیە؛ سنووردارکەرەکە وێنەکەیە نەک هێڵکارییەکە. لە پیتەکانی هێڵی سێیەمدا ٢٫٥ پیکسڵ لە هەر لایەک لابراوە، چونکە لێڵیی وێنەکە پیتە بچووکەکان ئەستوورتر پیشان دەدات.||The same three pictures as above: the letter in the inscription, the edge of the carving (light blue) and the edge of the font (red) over it, and the difference. The figures are small because every pixel of the photograph is a large part of a letter: the photograph is the limit, not the tracing. Letters from the third line were thinned by 2.5 pixels on each side, because the blur of the photograph makes small letters look thicker.]]</p>
+<p class="legend">[[هەمان سێ وێنەی سەرەوە: پیتەکە لە نەخشەکەدا، لێواری هەڵکۆڵینەکە لە نیوەی ڕووناکیدا (شینی کاڵ) و لێواری فۆنتەکە (سوور) لەسەری، و جیاوازییەکە (شین: هەڵکۆڵینێک کە فۆنتەکە نییەتی؛ سوور: فۆنت لە شوێنێک کە هەڵکۆڵین نییە). لێواری فۆنتەکە بە تێکڕا %%MN_EDGE2%% لە لێواری وێنەکە دوورە و کەمێک باریکترە. ئەمە بە مەبەستە: لێواری وێنەکە تەڵخییەکەشی تێدایە و هێڵە نزیکەکان پێکەوە دەلکێنێت، فۆنتەکە جیایان دەکاتەوە.||The same three pictures as above: the letter in the inscription, the edge of the carving at half brightness (light blue) and the edge of the font (red) over it, and the difference (blue: carving the font lacks; red: font where there is no carving). The edge of the font lies %%MN_EDGE2%% from the edge in the photograph on average, and is a little thinner. That is on purpose: the edge in the photograph includes the blur and runs close strokes together, which the font keeps apart.]]</p>
 <div class="grid">
 %%MN_CELLS%%
 </div>
 <section class="card">
 <p class="note">[[ئەم شێوانە لە نەخشەکەدا نین و لە پارچە هێڵکاریکراوەکان دروستکراون:||These forms are not in the inscription and were assembled from traced pieces:]]</p>
 <ul class="plain">%%MN_DERIVED%%</ul>
-<p class="note">[[نەخشەکە خاڵ و بزوێنی نییە. خاڵەکان (بازنەیی)، هەمزە، بزوێنەکان، ژمارەکان، خاڵبەندی و نیشانە کوردییەکان بە قەڵەمێکی بازنەیی بە ئەستووریی هەڵکۆڵینەکە کێشراون.||The inscription has no dots or vowel marks. Dots (round), hamza, vowel marks, digits, punctuation and the Kurdish marks are drawn with a round pen at the weight of the carving.]]</p>
+<p class="note">[[نەخشەکە خاڵ و بزوێنی نییە. خاڵەکان (بازنەیی)، هەمزە، بزوێنەکان، ژمارەکان، خاڵبەندی و نیشانە کوردییەکان بە قەڵەمێکی بازنەیی بە ئەستووریی هێڵێکی ئاسۆیی کێشراون.||The inscription has no dots or vowel marks. Dots (round), hamza, vowel marks, digits, punctuation and the Kurdish marks are drawn with a round pen as wide as a level stroke.]]</p>
 </section>
 
 <h2>[[شێوەکانی پیتەکان||Letter forms]] — Birmingham Hijazi</h2>

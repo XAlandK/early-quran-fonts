@@ -33,6 +33,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 # line of the inscription -> (two points of its baseline in the photograph, enlargement)
 # The enlargement brings an alif to about 150 px, the size the tracer is set up for.
+#
+# The photograph looks along the rock at a slant: the upper lines are further away.  On a
+# flat face seen like that, heights shrink with the square of the distance and widths with
+# the distance itself.  So a line whose letters are 1/f as tall as those of the lowest line
+# is only 1/sqrt(f) as wide, and enlarging it f times, as is done here to bring the alifs to
+# one height, makes its letters sqrt(f) times too wide.  lines.json records for every line
+# the factor that takes that out again ("squeeze": 1, 0.84 and 0.77); tracer.py applies it
+# to the level direction when it writes a letter out.  The widths of the heads of fa', qaf
+# and waw on the three lines (17, 13 and 13 px of the photograph) agree with it; the tall
+# stems would have it a little stronger.  How much the lowest line itself is foreshortened
+# cannot be told from one photograph, and is left as it is.
 LINES = [
     ('5', (150, 427.0), (760, 463.0), 2.10),   # ورسوله فقد فاز فوزا عظيما
     ('4', (100, 277.0), (820, 313.0), 2.95),   # ويغفر لكم ذنوبكم ومن يطع الله
@@ -51,7 +62,13 @@ def carving(rgb):
     return v - ndi.gaussian_filter(v, 40)                   # even out the lighting
 
 
-def main():
+def levelled():
+    """The lines of the inscription, each turned level and enlarged, one under the other.
+
+    Returns (strength of the carving, colours of the photograph, where the photograph has
+    pixels, the lines as lines.json records them).  The strength is the measure of
+    carving(): high on the carved line, about nothing on the rock, not cut off at either end.
+    """
     rgb = np.asarray(Image.open(os.path.join(HERE, 'naqsh', 'photo.jpg')).convert('RGB')).astype(np.float32)
     v = carving(rgb)
     width = int(max(rgb.shape[1] * s for _, _, _, s in LINES)) + 40
@@ -76,7 +93,14 @@ def main():
             col[r - UP:r + DN, :w, k] = ndi.map_coordinates(rgb[..., k], [Y, X], order=3, mode='nearest')
         have[r - UP:r + DN, :w] = ok
         lines.append({'x0': 0, 'r': r, 'm': 0.0, 'name': name, 'scale': s,
-                      'origin': [round(ox, 3), round(oy, 3)], 'angle': round(th, 6)})
+                      'origin': [round(ox, 3), round(oy, 3)], 'angle': round(th, 6),
+                      'squeeze': round(math.sqrt(LINES[0][3] / s), 3)})
+    return grey, col, have, lines
+
+
+def main():
+    grey, col, have, lines = levelled()
+    rgb_w = Image.open(os.path.join(HERE, 'naqsh', 'photo.jpg')).width
     lo, hi = np.percentile(grey[have], 66), np.percentile(grey[have], 98.7)
     tone = np.clip((grey - lo) / (hi - lo), 0, 1) ** 0.8
     page = np.where(have, 232 - tone * 190, 232).astype(np.uint8)       # carving dark, rock light
@@ -89,7 +113,7 @@ def main():
         pg = Image.fromarray(page).convert('RGB')
         for i, (name, _, _, s) in enumerate(LINES):
             r = FIRST + BAND * i
-            w = int(rgb.shape[1] * s)
+            w = int(rgb_w * s)
             n = max(1, round(w / 1500))
             for j in range(n):
                 x0, x1 = j * w // n - 30, (j + 1) * w // n + 30
