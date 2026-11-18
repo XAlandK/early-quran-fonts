@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """
 Trace letterforms from the photograph of a rock inscription near Medina that carries
 Qur'an 33:70-71 (photograph: Muhammad al-Maghdhawi, @mohammed93athar).

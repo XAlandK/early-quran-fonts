@@ -111,7 +111,8 @@ Files
   source/audit.py                lays the built font over the manuscript and measures
   source/audit/                  its pictures (one per form) and audit.json
   source/compare_sheet.py        side-by-side sheets of exemplar and outline
-  source/make_preview.py         rebuilds ../پیشاندانی-فۆنتەکان.html
+  source/make_preview.py         rebuilds ../پیشاندانی-فۆنتەکان.html (needs the Madinah
+                                 photographs, which are not in the public repository)
 
 Rebuild:  pip install fonttools shapely numpy pillow scipy scikit-image freetype-py
           cd source
@@ -121,5 +122,21 @@ Rebuild:  pip install fonttools shapely numpy pillow scipy scikit-image freetype
           python make_preview.py
           (the _dump folder is only needed by audit.py and can be deleted)
 
-No license has been chosen yet; the letterforms of a 7th-century manuscript
-are in the public domain.
+License
+-------
+Copyright (c) 2026 Aland Kawa Ali
+
+The font and its source are licensed under the Aland Attribution &
+Non-Commercial License (AANCL) v1.0; see the LICENSE file at the root of the
+repository. Attribution is mandatory: credit Aland Kawa Ali, keep the copyright
+notice and license intact, and mark any changes. Commercial use requires prior
+written permission from the copyright holder.
+
+The license covers the font and the code, not the manuscript. The letterforms
+of the 7th-century manuscript, and the photographs of it in source/manuscript/
+(Wikimedia Commons), are in the public domain; see THIRD_PARTY_NOTICES.md.
+
+مۆڵەت: فۆنتەکە و سەرچاوەکەی لە ژێر مۆڵەتی AANCL v1.0 دان (فایلی LICENSE لە
+ڕەگی ڕیپۆکەدا)، مافی لەبەرگرتنەوە بۆ Aland Kawa Ali. ناوهێنانی خاوەنەکەی
+پێویستە؛ بەکارهێنانی تیجاری ڕەزامەندیی نووسراوی پێشوەختەی دەوێت. دەستنووسەکە
+خۆی و وێنەکانی Public Domain ن و ئەم مۆڵەتە نایانگرێتەوە.

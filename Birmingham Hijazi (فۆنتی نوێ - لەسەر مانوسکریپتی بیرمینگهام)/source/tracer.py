@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """
 Trace letterforms straight from the photograph of the Birmingham Qur'an
 manuscript (Mingana Islamic Arabic 1572a).

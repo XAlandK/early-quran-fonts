@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """Where each letter form was taken from in the manuscript.
 
 page   L = folio 2 recto (Q 19:91 - 20:13), R = folio 1 verso (Q 18:23-31), as they

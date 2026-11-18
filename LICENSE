@@ -1,0 +1,169 @@
+Aland Attribution & Non-Commercial License (AANCL)
+Version 1.0
+
+Copyright (c) 2026 Aland Kawa Ali
+
+All rights not expressly granted in this License are reserved by the copyright
+holder.
+
+
+1. Definitions
+
+"License" means this document, the Aland Attribution & Non-Commercial License
+(AANCL), Version 1.0.
+
+"Licensor" means Aland Kawa Ali, the copyright holder of the Software.
+
+"Software" means the source code, font files, data, documentation and any other
+material that the Licensor publishes under this License, in source or compiled
+form. It does not include Third-Party Material (Section 6).
+
+"Derivative Work" means any work that is based on the Software or any part of
+it, including a modified, adapted, translated or extended version, a work that
+incorporates the Software in whole or in part, and any font, file or output
+built from its source.
+
+"Distribute" means to make the Software or a Derivative Work available to any
+other person, by any means, including publishing it online or publishing a
+fork.
+
+"You" means the individual or legal entity exercising rights under this
+License.
+
+"Commercial Use" means any use that is primarily intended for, or directed
+toward, commercial advantage or monetary compensation. It includes, without
+limitation:
+  (a) selling, renting or licensing the Software or a Derivative Work for a fee;
+  (b) including the Software or a Derivative Work in a product, service,
+      publication or other offering that is sold, offered for a fee, or
+      financed by subscriptions or advertising;
+  (c) using the Software or a Derivative Work to provide paid services; and
+  (d) charging for, or otherwise earning revenue from, access to, download of
+      or Distribution of the Software or a Derivative Work.
+
+Personal use, private study, teaching, academic research and other uses from
+which no one receives monetary compensation or commercial advantage are
+non-commercial.
+
+
+2. Grant of Permissions
+
+Subject to the conditions of Sections 3 and 4, the Licensor grants You a
+worldwide, royalty-free, non-exclusive permission to:
+  (a) view and study the Software, including its source code;
+  (b) download and copy the Software;
+  (c) use the Software for personal and other non-commercial purposes;
+  (d) modify the Software and create Derivative Works;
+  (e) Distribute the Software and Derivative Works, in original or modified
+      form; and
+  (f) publish forks and derivative projects.
+
+Every copy of the Software or of a Derivative Work that You Distribute must be
+Distributed under the terms of this License, together with a copy of it. You
+may not impose any further terms that restrict the rights this License grants
+to others. Each person who receives the Software or a Derivative Work receives
+these permissions directly from the Licensor, on the terms of this License.
+
+
+3. Attribution Conditions
+
+The permissions in Section 2 are granted only on the following conditions:
+  (a) Credit. You must give appropriate credit to Aland Kawa Ali as the
+      original author of the Software, in a manner reasonable for the medium
+      in which You use or Distribute it (for example in a README, credits
+      page, documentation or font metadata).
+  (b) Notices. You must keep intact all copyright notices, this License and
+      all notices that refer to it, in every copy and in every substantial
+      portion of the Software or a Derivative Work. You may not remove or
+      alter them.
+  (c) Modifications. If You modify the Software or Distribute a Derivative
+      Work, You must clearly indicate that modifications were made, and
+      should state what was changed.
+  (d) Authorship. You must not claim to be the original author of the
+      Software, and You must not suggest that the Licensor endorses You, Your
+      use, or Your Derivative Work.
+
+
+4. Non-Commercial Restrictions
+
+  (a) Commercial Use of the Software or of a Derivative Work is prohibited
+      without the prior written permission of the Licensor.
+  (b) Selling the Software or any modified version of it, alone or as part of
+      a bundle, is prohibited.
+  (c) Incorporating the Software or a Derivative Work into a commercial
+      product or a paid service is prohibited without the prior written
+      permission of the Licensor.
+  (d) Monetizing the Software, its Distribution, or any Derivative Work is
+      prohibited without the prior written permission of the Licensor.
+
+Written permission must be given expressly by the Licensor. It is not implied
+by any other conduct, by silence, or by this License.
+
+
+5. Ownership and Commercial Licensing
+
+All intellectual property rights in the Software remain with Aland Kawa Ali.
+This License grants permissions only; it does not transfer, assign or sell
+copyright or any other ownership right. It does not grant any right to use the
+Licensor's name, except as required to give credit under Section 3.
+
+Commercial licenses may be granted separately by the Licensor, on terms agreed
+in writing. To ask for one, contact the copyright holder through the repository
+in which the Software is published.
+
+
+6. Third-Party Material
+
+The Software may be published together with material owned by others, or with
+material in the public domain ("Third-Party Material"), such as fonts by other
+authors and photographs of historical manuscripts. Third-Party Material is not
+covered by this License. It remains under its own license or status, which
+governs Your use of it. Where applicable, it is identified in a notice file
+that accompanies the Software, such as THIRD_PARTY_NOTICES.md.
+
+Nothing in this License restricts any use of material that is in the public
+domain.
+
+
+7. Disclaimer of Warranty
+
+TO THE EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED "AS IS",
+WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY
+AND NON-INFRINGEMENT. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU.
+
+
+8. Limitation of Liability
+
+TO THE EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE LICENSOR BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OF OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+9. Termination
+
+If You violate any condition of this License, the permissions granted to You
+under it terminate automatically, subject to applicable law. Termination of
+Your permissions does not terminate the permissions of people who received the
+Software or a Derivative Work from You, as long as they comply with this
+License. Sections 1 and 5 to 10 survive termination.
+
+
+10. General
+
+If any provision of this License is held to be unenforceable, it shall be
+enforced to the extent possible, and the remaining provisions remain in
+effect. No failure or delay by the Licensor in enforcing this License is a
+waiver of any right under it.
+
+This License is a custom license. It is not the MIT, Apache, GPL or any other
+standard license, and it is not an open-source license approved by the Open
+Source Initiative, because it restricts Commercial Use.
+
+
+How to refer to this License
+
+    Copyright (c) 2026 Aland Kawa Ali
+    Licensed under AANCL v1.0. See the LICENSE file.

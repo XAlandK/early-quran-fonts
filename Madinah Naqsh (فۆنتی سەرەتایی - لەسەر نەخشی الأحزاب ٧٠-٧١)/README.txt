@@ -91,15 +91,17 @@ photograph; it does not make the photograph sharper.
 Files
 -----
   MadinahNaqsh-Regular.ttf       the font
-  source/naqsh/photo.jpg         the photograph
+  source/naqsh/photo.jpg         the photograph (not in the public repository; see License)
   source/prep.py                 levels and scales the lines -> page.png, page_rgb.jpg, lines.json
   source/exemplars.py            where each letter form was taken from
   source/tracer.py               cuts the exemplars out and writes traced.json
   source/build.py                builds the font; DERIVED lists the assembled forms
-  source/audit.py, audit/        lays the font over the carving and measures
+  source/audit.py, audit/        lays the font over the carving and measures (the public
+                                 repository has only audit.json, not the pictures)
   source/compare_sheet.py        side-by-side sheets of exemplar and outline
 
 Rebuild:  pip install fonttools shapely numpy pillow scipy scikit-image freetype-py
+          (first save the photograph from the post linked above as source/naqsh/photo.jpg)
           cd source
           python prep.py
           python tracer.py page.png lines.json traced.json - - _dump
@@ -107,5 +109,22 @@ Rebuild:  pip install fonttools shapely numpy pillow scipy scikit-image freetype
           python audit.py ../MadinahNaqsh-Regular.ttf _dump audit
           (the preview page is rebuilt by make_preview.py in the Birmingham Hijazi source folder)
 
-No license has been chosen.  The letterforms of the inscription are ancient;
-the photograph belongs to its photographer.
+License
+-------
+Copyright (c) 2026 Aland Kawa Ali
+
+The font and its source are licensed under the Aland Attribution &
+Non-Commercial License (AANCL) v1.0; see the LICENSE file at the root of the
+repository. Attribution is mandatory: credit Aland Kawa Ali, keep the copyright
+notice and license intact, and mark any changes. Commercial use requires prior
+written permission from the copyright holder.
+
+The license covers the font and the code only. The inscription itself is
+ancient. The photograph belongs to its photographer, Muhammad al-Maghdhawi; it
+is not covered by this license and is not included in the public repository.
+See THIRD_PARTY_NOTICES.md.
+
+مۆڵەت: فۆنتەکە و سەرچاوەکەی لە ژێر مۆڵەتی AANCL v1.0 دان (فایلی LICENSE لە
+ڕەگی ڕیپۆکەدا)، مافی لەبەرگرتنەوە بۆ Aland Kawa Ali. ناوهێنانی خاوەنەکەی
+پێویستە؛ بەکارهێنانی تیجاری ڕەزامەندیی نووسراوی پێشوەختەی دەوێت. وێنەی
+نەخشەکە هی محمد المغذوی یە، ئەم مۆڵەتە نایگرێتەوە و لە ڕیپۆ گشتییەکەدا نییە.

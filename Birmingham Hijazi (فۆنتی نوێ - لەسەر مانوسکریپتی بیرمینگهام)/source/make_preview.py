@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """
 Write the self-contained font preview page (fonts and images embedded).
 
@@ -289,6 +291,9 @@ def main():
 TEMPLATE = r"""<!doctype html>
 <html lang="ckb" dir="rtl">
 <head>
+<!-- Copyright (c) 2026 Aland Kawa Ali. Licensed under AANCL v1.0. See the LICENSE file.
+     The third-party fonts and photographs embedded in this page keep their own licenses;
+     see THIRD_PARTY_NOTICES.md. -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>فۆنتە کۆنەکانی قورئان</title>

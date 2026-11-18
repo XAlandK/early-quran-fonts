@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """
 Pixel audit: every traced glyph of the built font, laid over the ink of the
 exemplar it was traced from, at the same place and scale.
