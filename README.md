@@ -18,7 +18,7 @@ alphabet.*
 | Font | Source | Status |
 |---|---|---|
 | [Birmingham Hijazi](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29) | The Birmingham Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a), parchment dated 568–645 CE, and the leaves of the same Qur'an in Paris (BnF Arabe 328, folios 71–86) | Version 4.000 — all 62 letter forms and the dots traced from the manuscript and checked against it pixel by pixel ([README](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/README.txt)) |
-| [Madinah Naqsh](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29) | A rock inscription near Medina carrying Qur'an 33:70–71 | Draft 0.100 — 28 letter forms traced from a small photograph ([README](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29/README.txt)) |
+| [Madinah Naqsh](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29) | A rock inscription near Medina carrying Qur'an 33:70–71 | Draft 0.200 — 28 letter forms: the centre line and the width of every stroke, taken from a small photograph ([README](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29/README.txt)) |
 
 Both fonts write Arabic and Kurdish (Sorani), have Arabic joining, lam-alef,
 vowel marks, and two stylistic sets: `ss01` (rasm only, without dots) and
@@ -80,6 +80,25 @@ describes each check and what in the font is not from the manuscript.
 *Madinah Naqsh: the text of the inscription (al-Ahzab 70–71), without dots as
 it is carved, and a line of Kurdish. The photograph the letters were traced
 from is not shown here, because it belongs to its photographer.*
+
+The photograph is small: an alif is 40 to 70 pixels tall in it, and the edge
+of a letter is mostly blur. Draft 0.2 therefore does not trace edges. For
+every stroke it takes the centre line and the width from the photograph and
+draws the stroke again with a clean edge.
+
+| Measured on the photograph | Result |
+|---|---|
+| Width of a level stroke on the three lines | 5.8, 4.2 and 3.6 px: one width once the lines are brought to one size |
+| Width of an upright stroke | 8.4, 7.4 and 8.4 px: one and a half times to twice a level stroke |
+| Blur of the photograph | 2.8 px |
+| Centre line of the font to the brightest line of the carving | 0.36 px on average, 95 % within 0.92 px |
+
+The photograph looks along the rock, so the upper lines are foreshortened;
+their letters are narrowed by 0.84 and 0.77. Those two figures come from a
+rule, not a measurement, and the lowest line is itself seen at a slant by an
+unknown amount. The font's
+[README](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29/README.txt)
+says what is not certain and what was decided by hand.
 
 The figures are drawn by
 [`make_readme_figures.py`](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/source/make_readme_figures.py)

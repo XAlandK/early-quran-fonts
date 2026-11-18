@@ -3,16 +3,18 @@
 # Copyright (c) 2026 Aland Kawa Ali
 # Licensed under AANCL v1.0. See the LICENSE file.
 """
-Madinah Naqsh — build script (draft 0.1).
+Madinah Naqsh — build script (draft 0.2).
 
 The letterforms are traced by tracer.py from a photograph of a rock inscription in the
 hills around Medina that carries Qur'an 33:70-71 (photograph: Muhammad al-Maghdhawi,
-@mohammed93athar), and stored in traced.json.  The photograph is small, so the outlines
-give the shape of the carving, not the detail of its edges.
+@mohammed93athar), and stored in traced.json: for every stroke its centre line, taken
+from the photograph, and its width, measured on the photograph.  The photograph is small;
+the edge of a stroke in the font is therefore a clean line at the measured width, not a
+copy of the edge in the photograph, which is mostly blur.
 
 The inscription holds 28 letter forms.  The forms it does not hold are assembled from the
 traced ones (see DERIVED below).  Dots, hamzas, vowel signs, digits and punctuation, none
-of which the inscription has, are drawn with a round pen of the weight of the carving.
+of which the inscription has, are drawn with a round pen as wide as a level stroke.
 
     ss01  rasm only: no dots, hamzas or small v's, as in the inscription
     ss02  hide vowel marks
@@ -39,9 +41,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # Metrics (font units, UPM 1000).  One manuscript pixel is 1 / 0.225 units.
 # --------------------------------------------------------------------------
 BL = 40                 # height of the centre of the baseline stroke
-STD = 28 / 0.225        # thickness of the joining stroke where two letters meet (tracer.STD)
-HS = STD / 2
-RX, RY = 52, 52         # round pen for the drawn parts: a carved groove has one width
+STD = 12.4 / 0.225      # thickness of the joining stroke where two letters meet: the width of
+HS = STD / 2            # a level stroke of the inscription (tracer.LEVEL)
+RX, RY = HS, HS         # round pen for the drawn parts: as wide as a level stroke
 OVER = 12               # how far a joining stroke runs into its neighbour
 
 
@@ -162,8 +164,9 @@ def plain_len(form, side, limit=320):
 
 
 def cap(x):
-    """A round end for a stroke on the baseline."""
-    return sweep([(x, BL)], HS, HS)
+    """The end of a stroke on the baseline.  The strokes of the inscription end square, so
+    this only makes sure the end is whole."""
+    return box(x - 3, BL - HS, x + 3, BL + HS)
 
 
 def strip_right(form, keep=14, bearing=BEAR):
@@ -269,7 +272,7 @@ def _derived():
     return d
 
 
-HAH_HEAD = 330          # width of the head of final ha' (font units)
+HAH_HEAD = 256          # width of the head of final ha' (font units)
 DERIVED = _derived()
 FORMS = dict(TRACED)
 FORMS.update(DERIVED)
@@ -325,8 +328,8 @@ ANCHOR_BELOW = {}
 # Small marks: i'jam dashes, hamza, madda, v, wasla
 # --------------------------------------------------------------------------
 DRX, DRY = 19, 19        # nib for hamza, v and the other small marks
-DOT = 50                 # radius of a dot (a dot is as wide as a stroke)
-DGAP = 126               # distance between the centres of two dots
+DOT = 36                 # radius of a dot (a dot is a little wider than a level stroke)
+DGAP = 100               # distance between the centres of two dots
 
 
 def dash(g, cx, cy):
@@ -891,16 +894,17 @@ def build(out_path):
     fb.setupNameTable({
         "familyName": "Madinah Naqsh",
         "styleName": "Regular",
-        "uniqueFontIdentifier": "MadinahNaqsh-Regular-0.100",
+        "uniqueFontIdentifier": "MadinahNaqsh-Regular-0.200",
         "fullName": "Madinah Naqsh Regular",
         "psName": "MadinahNaqsh-Regular",
-        "version": "Version 0.100",
+        "version": "Version 0.200",
         "copyright": "Copyright (c) 2026 Aland Kawa Ali",
         "licenseDescription": ("Licensed under the Aland Attribution & Non-Commercial License (AANCL) v1.0. "
                                "Attribution is required; commercial use requires prior written permission. "
                                "See the LICENSE file."),
         "licenseInfoURL": "https://github.com/XAlandK/early-quran-fonts/blob/main/LICENSE",
-        "description": ("Draft typeface traced from a rock inscription of Qur'an 33:70-71 near Medina. "
+        "description": ("Draft typeface from a rock inscription of Qur'an 33:70-71 near Medina: the centre line "
+                        "of every stroke is traced from a photograph and drawn at the width measured on it. "
                         "Photograph of the inscription: Muhammad al-Maghdhawi, @mohammed93athar on X "
                         "(https://x.com/mohammed93athar/status/1322206509770694656). 28 forms traced, the rest assembled. "
                         "ss01: rasm only (no dots). ss02: hide vowel marks."),

@@ -3,8 +3,8 @@
 # Copyright (c) 2026 Aland Kawa Ali
 # Licensed under AANCL v1.0. See the LICENSE file.
 """
-Letter-by-letter comparison: each exemplar as it stands in the manuscript,
-next to the outline traced from it.
+Letter-by-letter comparison: each exemplar as it stands in the inscription (narrowed as
+its line is, see prep.py), next to the letter traced from it.
 
 Usage:  python compare_sheet.py <full.jpg> <lines.json> <traced.json> <out_dir> [cells per sheet]
 """
@@ -33,18 +33,19 @@ def cell(page, key, rec, scale=None, parts=False):
     ox = (W - wu * sc) / 2 - XL * sc          # pixel x of unit x=0
     oy = H - (H - (YT - YB) * sc) / 2 + YB * sc   # pixel y of unit y=0
     # manuscript
-    xa = max(int(src['x0'] + XL * T.PXU) - 2, 0)
-    xb = int(src['x1'] + XR * T.PXU) + 2
-    g, rgb = page.deskew(src['page'], src['line'], xa, xb)
+    sq = float(page.lines[src['page']][src['line'] - 1].get('squeeze', 1.0))    # the line is narrowed by this
+    xa = max(int(src['x0'] + XL * T.PXU / sq) - 2, 0)
+    xb = int(src['x1'] + XR * T.PXU / sq) + 2
+    rgb = page.deskew(src['page'], src['line'], xa, xb)[1]
     r0 = int(src['yb'] - (YT - T.BL) * T.PXU)
     r1 = int(src['yb'] + (T.BL - YB) * T.PXU)
     pad = np.full((max(r1, rgb.shape[0]) - min(r0, 0), rgb.shape[1], 3), 235, dtype=np.uint8)
     pad[-min(r0, 0):-min(r0, 0) + rgb.shape[0]] = rgb
     crop = Image.fromarray(pad[r0 - min(r0, 0):r1 - min(r0, 0)])
     f = sc / T.PXU                            # manuscript px -> cell px
-    crop = crop.resize((max(int(crop.width * f), 1), max(int(crop.height * f), 1)), Image.LANCZOS)
+    crop = crop.resize((max(int(crop.width * f * sq), 1), max(int(crop.height * f), 1)), Image.LANCZOS)
     left = Image.new('RGB', (W, H), (235, 228, 210))
-    mx = ox - (src['x0'] - xa) * f
+    mx = ox - (src['x0'] - xa) * f * sq
     my = oy - YT * sc
     left.paste(crop, (int(round(mx)), int(round(my))))
     # traced outline
