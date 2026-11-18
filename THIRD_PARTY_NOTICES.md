@@ -23,7 +23,9 @@ no charge from the repositories above, at the tags `v2.00`.
 ## Photographs of the Birmingham Qur'an manuscript
 
 The files in `Birmingham Hijazi (new - from the Birmingham manuscript)/source/manuscript/`,
-and the crops of them in that folder's `source/audit/`, are photographs of the
+and the crops of them in that folder's `source/audit/` and in
+`docs/images/birmingham-hijazi-vs-manuscript.jpg` and
+`docs/images/birmingham-hijazi-audit.jpg`, are photographs of the
 Birmingham Qur'an manuscript (Cadbury Research Library, University of Birmingham,
 Mingana Islamic Arabic 1572a). They were downloaded from Wikimedia Commons, where
 they are marked as public domain:

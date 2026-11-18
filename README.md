@@ -6,6 +6,12 @@ taken from photographs of the original ink and carving, not redrawn.
 فۆنتگەلێک کە پیتەکانیان لە کۆنترین دەقە نووسراوەکانی قورئانەوە هێڵکاری کراون:
 شێوەی پیتەکان لە وێنەی مەرەکەب و هەڵکۆڵینە ڕەسەنەکانەوە وەرگیراون، نەک بە دەست کێشراون.
 
+![Text set in Birmingham Hijazi: the basmala and the opening of Sura Ta-Ha without dots, the basmala with vowel marks, a line of Kurdish, and the Arabic alphabet](docs/images/birmingham-hijazi-specimen.png)
+
+*Birmingham Hijazi. The first two lines are set without dots (`ss01`), as the
+manuscript is written; then the basmala with vowel marks, a line of Kurdish,
+and the alphabet.*
+
 ## Fonts
 
 | Font | Source | Status |
@@ -20,6 +26,36 @@ vowel marks, and two stylistic sets: `ss01` (rasm only, without dots) and
 Each font folder holds the `.ttf`, its README and a `source/` folder with the
 scripts that trace the letters, build the font and measure it against the
 original. The README of each font explains how to rebuild it.
+
+## Birmingham Hijazi, compared with the manuscript
+
+![Three lines of the Birmingham manuscript, each with the same text set in Birmingham Hijazi underneath at the same size](docs/images/birmingham-hijazi-vs-manuscript.jpg)
+
+*Three lines of the Birmingham manuscript (folio 2r, lines 11, 16 and 20:
+Ta-Ha 3, 8 and 11). Under each one is the same text, in the scribe's spelling,
+set in the font at the same size.*
+
+![The pixel audit for nine letters: each letter in the manuscript, the edges of the ink and of the font laid over each other, and the difference](docs/images/birmingham-hijazi-audit.jpg)
+
+*The pixel audit, shown for nine of the 53 traced letter forms. By row, left
+to right: alif ا and waw و; lam-alif لا and final ha ـه; medial ain ـعـ and
+medial ta ـطـ; kaf ک and initial lam لـ; sad ص. Each set of three shows the letter in the manuscript; the same
+picture with the edge of the ink in light blue and the edge of the font in
+red; and the difference (blue: ink the font lacks, red: font where there is
+no ink, grey: the joins, which are left out). Over all 53 forms the font's edge
+is on average 0.15 px of the photograph from the ink's edge.*
+
+## Madinah Naqsh
+
+![The text of the inscription, al-Ahzab 70-71, set in Madinah Naqsh, and a line of Kurdish](docs/images/madinah-naqsh-specimen.png)
+
+*Madinah Naqsh: the text of the inscription (al-Ahzab 70–71), without dots as
+it is carved, and a line of Kurdish. The photograph the letters were traced
+from is not shown here, because it belongs to its photographer.*
+
+The figures are drawn by
+[`make_readme_figures.py`](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/source/make_readme_figures.py)
+from the fonts and the public-domain photographs of the manuscript.
 
 ## Other fonts in this repository
 
