@@ -1,0 +1,17 @@
+# System and build files
+.DS_Store
+__pycache__/
+*.pyc
+_dump/
+
+# Photographs by Muhammad al-Maghdhawi (@mohammed93athar on X), and files that
+# reproduce them. They are his work and are not published in this repository
+# without his permission. See the README of Madinah Naqsh for how to rebuild it.
+/*mohammed93athar*/
+/Madinah Naqsh*/source/naqsh/
+/Madinah Naqsh*/source/page.png
+/Madinah Naqsh*/source/page_rgb.jpg
+/Madinah Naqsh*/source/audit/*.jpg
+
+# The preview page embeds crops of the same photographs.
+/*.html
