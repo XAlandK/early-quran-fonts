@@ -3,7 +3,7 @@
 # Copyright (c) 2026 Aland Kawa Ali
 # Licensed under AANCL v1.0. See the LICENSE file.
 """
-Birmingham Hijazi — build script (version 4).
+Birmingham Hijazi — build script (version 4.1).
 
 The letterforms are not drawn: they are the outlines of the scribe's ink,
 traced by tracer.py from the photograph of the Birmingham Qur'an manuscript
@@ -847,10 +847,10 @@ def build(out_path):
     fb.setupNameTable({
         "familyName": "Birmingham Hijazi",
         "styleName": "Regular",
-        "uniqueFontIdentifier": "BirminghamHijazi-Regular-4.000",
+        "uniqueFontIdentifier": "BirminghamHijazi-Regular-4.100",
         "fullName": "Birmingham Hijazi Regular",
         "psName": "BirminghamHijazi-Regular",
-        "version": "Version 4.000",
+        "version": "Version 4.100",
         "copyright": "Copyright (c) 2026 Aland Kawa Ali",
         "licenseDescription": ("Licensed under the Aland Attribution & Non-Commercial License (AANCL) v1.0. "
                                "Attribution is required; commercial use requires prior written permission. "

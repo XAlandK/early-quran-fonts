@@ -1,4 +1,4 @@
-Birmingham Hijazi — v4.000
+Birmingham Hijazi — v4.100
 ==========================
 
 کوردی
@@ -42,6 +42,19 @@ Birmingham Hijazi — v4.000
         دوور بوون، لە دەستنووسەکەدا ١٩٫٥ پیکسڵن. ئێستا خاڵی فۆنتەکە هێڵکاریی
         خاڵێکی ڕاستەقینەیە (ئەوەی لە هەموویان نزیکترە لە ناوەند) و دوورییەکان
         هەمان دووریی پێوراون.
+  v4.1  دوای پشکنینی سێیەم، کە هەر ٦٢ شێوەکەی لەسەر هەموو ٣٤ لاپەڕەی
+      مصحفەکە گەڕاند (پشکنینی ٦ لە خوارەوە). دوو هەڵە دۆزرانەوە کە پشکنینەکانی
+      پێشوو نەیاندەبینی، چونکە هەردووکیان لە ناو پیتەکەدان نەک لە لێواری:
+      - «هـ»ی ناوەڕاست: مەرەکەبی ئەو نموونەیەی فۆنتەکە لێی هێڵکاری کرابوو
+        هەڵوەریوە، و پەڵەیەکی هەڵوەریو وەک چاوی پیتەکە گیرابوو. لە ١٧٤
+        نموونەی تری هەمان پیت، ٩٩٫٥٪یان دوو چاوی بچووکیان لە خوارەوە هەیە و
+        زیاتر لە سێ چارەکیان لە شوێنی ئەو پەڵەیەدا مەرەکەبیان هەیە. ئێستا
+        نموونەیەکی ساغی هەمان لاپەڕە بەکاردێت: «بينهما»، طه ٦، دێڕی ١٥.
+      - «م»ی کۆتایی: چاوی ئەم پیتە درزێکی باریکە (نزیکەی ٣ پیکسڵ). هێڵکارەکە
+        هەر درزێکی لەوە باریکتری وەک مەرەکەبی هەڵوەریو پڕ دەکردەوە، بۆیە
+        چاوەکەی نەمابوو. لە ٢١٤ نموونەدا ٩١٪یان ئەو چاوەیان هەیە. ئێستا
+        چاوەکە وەک لە دەستنووسەکەدا هێڵکاری کراوە.
+      ٦٠ شێوەکەی تر نەگۆڕاون.
 
 پشکنینەکان:
   ١. فۆنت لەسەر نموونەکەی خۆی (source/audit.py). هەر پیتێک لە فایلی فۆنتەکەوە
@@ -58,10 +71,10 @@ Birmingham Hijazi — v4.000
      تەنها خاڵێکی وردە (ئەوپەڕی ١٪ی پیتەکە)؛ لە شەشدا مەرەکەبی پیتێکی ترە
      (هێڵی خوارەوە یان پیتی تەنیشت) و بە چاو پشکنراوە.
   ٣. فۆنت لەسەر هەموو نموونەکانی تر (source/variation.py). نووسەرەکە هیچ
-     پیتێکی دوو جار وەک یەک نەنووسیوە. ٣٩١ نموونە لە هەموو لاپەڕەکان هێڵکاری
+     پیتێکی دوو جار وەک یەک نەنووسیوە. ٣٩٠ نموونە لە هەموو لاپەڕەکان هێڵکاری
      کران و هەر دووانێکی هەمان پیت لەسەر یەک دانران:
          دوو نموونەی هەمان پیت بە دەستی نووسەرەکە    ٢٫٠٠ پیکسڵ لە یەکتر دوورن
-         نموونەی فۆنتەکە لە نموونەکانی تر             ١٫٨٨ پیکسڵ
+         نموونەی فۆنتەکە لە نموونەکانی تر             ١٫٨٥ پیکسڵ
      واتە پیتەکانی فۆنتەکە نموونەی ئاسایی نووسەرەکەن، و دووریی فۆنتەکە لە
      نموونەکەی خۆی (٠٫١٥) زۆر لە جیاوازیی نێوان دوو پیتی نووسەرەکە خۆی کەمترە.
   ٤. ئایا پەڕەکانی پاریس هەمان دەستخەتن؟ ٢٦ پیتی تریان لێ هێڵکاری کرا:
@@ -74,6 +87,34 @@ Birmingham Hijazi — v4.000
      ٠٫٩٨–١٫٠١ و لە ئەستووریدا ٠٫٨٤–٠٫٩٧ی پیتەکانی بیرمینگهامن. لە پەڕەکانی
      ٧٨ و ٧٩ قەڵەمەکە وەک بیرمینگهام ئەستوورە (١٫٠٩–١٫١٣) و پیتەکانیان وەک
      خۆیان وەرگیراون (بەرزی ٠٫٩٦).
+  ٦. فۆنت لەسەر هەموو مصحفەکە (source/census.py). هەر شێوەیەکی فۆنتەکە
+     لەسەر هەر ٣٤ لاپەڕەکە (٢ی بیرمینگهام و ٣٢ی پاریس) دادەنرێت و ئەو
+     شوێنانەی باش دەگونجێت وەک نموونەی ئەو پیتە وەردەگیرێن. شوێنێک تەنها
+     کاتێک دەژمێردرێت کە هەموو بەشەکانی پیتەکەی تێدا بێت.
+         شوێنی پشکنراو                              ١٤٬٦٦٤
+         نموونەی وەرگیراو                            ١٠٬٠٤٩، لە ٥٩ شێوەدا
+     نموونەکانی هەر شێوەیەک لەسەر یەک دادەنرێن: «پیتی ناوەند»ی نووسەرەکە، کە
+     لە هەر خاڵێکیدا دیارە چەند لە نموونەکان لەوێ مەرەکەبیان هەیە.
+         نموونەیەکی نووسەرەکە لە پیتی ناوەند           ٢٫٢١ پیکسڵ دوورە
+         پیتی فۆنتەکە لە پیتی ناوەند                   ١٫٤٧ پیکسڵ
+     لە ٥٥ لە ٥٩ شێوەدا پیتی فۆنتەکە لە زۆربەی نموونەکانی نووسەرەکە خۆی
+     نزیکترە لە ناوەند. چوارەکەی تر: «ب»ی کۆتایی (٦١ نموونە، کلکەکەی کەمێک
+     نزمترە لە ئاسایی) و سێ شێوەی دەگمەن کە تەنها ٥ تا ٩ نموونەیان دۆزرایەوە.
+     سێ شێوە («ع»ی تەنها، «ق»ی کۆتایی، «ص»ی کۆتایی) کەمتر لە پێنج نموونەیان
+     هەیە و بەم ڕێگایە هەڵناسەنگێنرێن.
+     هەمان فایل هەموو لاپەڕەکانیش دەپێوێت:
+       قەبارەی نووسین: پەڕەکانی ٧١–٧٧: ٠٫٧٦ تا ٠٫٨٩ی بیرمینگهام (ناوەند ٠٫٨٥)؛
+         پەڕەکانی ٧٨–٨٦: ٠٫٨٧ تا ٠٫٩٨ (ناوەند ٠٫٩٤). سێ لاپەڕە گەورەکراوەکە
+         (٠٫٨٩، ٠٫٨٣، ٠٫٨٥) دووپات بوونەوە. ئەو دێڕانەی لە پەڕەکانی ٧٨ و ٧٩
+         بەکارهاتوون ٠٫٩٣ تا ٠٫٩٧ن؛ واتە سێ پیتەکەیان («ع» و «ق»ی تەنها، «ص»ی
+         کۆتایی) ٣ تا ٧٪ بچووکترن. وەک خۆیان هێڵراونەتەوە، چونکە هێڵەکانیان
+         پێشتر ٩ تا ١٣٪ ئەستوورترن و گەورەکردن زیاتر ئەستووریان دەکات.
+       خاڵەکان: ٤٬٣٤٤ خاڵ لە ٣٤ لاپەڕەدا. درێژییان هەموو جێیەک وەک یەکە
+         (٢٢٫٤ تا ٢٣٫٣). لاری لە پەڕەکانی ٧١–٧٧ ٢٦ پلەیە، لە ٧٨–٨٦ ١٩٫٥ و لە
+         بیرمینگهام ٢٢٫٤. خاڵی فۆنتەکە هی بیرمینگهامە و نەگۆڕاوە.
+     ئاگاداری: نموونەیەک بۆیە دەدۆزرێتەوە چونکە لە پیتی فۆنتەکە دەچێت. پیتێک
+     کە نووسەرەکە زۆر جیاواز نووسیبێتی نادۆزرێتەوە، بۆیە جیاوازیی ڕاستەقینەی
+     نووسەرەکە لەم ژمارانە گەورەترە.
   وێنە و ژمارەی هەر پیتێک لە source/audit/ دایە و لە پەڕەی پیشاندانیشدا.
 
 چی دەقاودەقی دەستنووسەکە نییە:
@@ -83,6 +124,8 @@ Birmingham Hijazi — v4.000
     (هەمان مصحف و هەمان نووسەر)، و شەشیان لە لاپەڕەیەکەوە کە گەورە کراوەتەوە.
   - ئەو شوێنانەی مەرەکەبەکە وەریوە پڕ کراونەتەوە (درز و خاڵە سپییەکانی ناو
     هێڵەکان). لە چەند پیتێکدا ئەمە بە دەست دیاری کراوە (لە exemplars.py).
+    پشکنینی ١ ئەم پڕکردنەوانە بە هەڵە نازانێت؛ تەنها پشکنینی ٦ دەتوانێت
+    چاوی پیتێک لە پەڵەیەکی هەڵوەریو جیا بکاتەوە.
   - لەو شوێنانەی پیتەکە ڕاستەوخۆ بە پیتی تەنیشتییەوە لکاوە، ملێکی ٤ پیکسڵی
     زیاد کراوە تا بگاتە ئەستووریی هێڵی بەستن. لە «ح»ی کۆتاییدا «ل»ەکەی
     پێش خۆی (کە لەسەری وەستاوە) بە دەست لابراوە.
@@ -136,6 +179,22 @@ audit. v4 follows a second audit, which took in all the leaves of the Qur'an:
     traced outline of a real dash (the one nearest to the middle of them all),
     at the distances that were measured.
 
+v4.1 follows a third audit, which looked for all 62 forms on all 34 pages of
+the Qur'an (check 6 below). It found two faults that the earlier checks could
+not see, because both lie inside the letter, not on its edge:
+
+  * Medial ha'. The ink of the exemplar the font was traced from has flaked,
+    and a flaked patch had been taken for the eye of the letter. Of 174 other
+    instances of the same letter, 99.5 % have two small eyes low in the body,
+    and more than three quarters have ink where that patch is. A sound
+    exemplar on the same page is used now: بينهما, Q 20:6, line 15.
+  * Final mim. The eye of this letter is a slit about 3 px wide. The tracer
+    closed every gap narrower than that as flaked ink, so the eye was gone. Of
+    214 instances, 91 % have the eye. It is traced now as it stands in the
+    manuscript.
+
+The other 60 forms are unchanged.
+
 Checks:
 
   1. The font against its own exemplar (source/audit.py). Every glyph is
@@ -150,10 +209,10 @@ Checks:
      none, or a speck (1 % of the letter at most); for six it is the ink of
      another letter (the line below, or a neighbour), checked by eye.
   3. The font against all other instances (source/variation.py). The scribe
-     never wrote a letter twice in the same way. 391 instances were traced on
+     never wrote a letter twice in the same way. 390 instances were traced on
      all the pages and every two of the same letter laid over each other: two
      instances of a letter in the scribe's hand are typically 2.00 px apart,
-     and the instance the font uses is 1.88 px from the others. So the letters
+     and the instance the font uses is 1.85 px from the others. So the letters
      of the font are ordinary instances of the scribe's writing, and the font
      is far closer to its own exemplar (0.15 px) than two letters of the scribe
      are to each other.
@@ -168,12 +227,44 @@ Checks:
      thickness of the strokes. On folios 78 and 79 the pen is as heavy as in
      Birmingham (1.09–1.13) and their letters are used as they are (height
      0.96).
+  6. The font against the whole Qur'an (source/census.py). Every form of the
+     font is laid over each of the 34 pages (2 in Birmingham, 32 in Paris), and
+     the places where it fits are taken as instances of that letter. A place
+     counts only if every part of the letter is there.
+         places looked at       14,664
+         instances accepted     10,049, of 59 forms
+     The instances of a form are laid over each other: the scribe's "middle
+     letter", in which every point shows how many of the instances have ink
+     there.
+         an instance of the scribe to the middle letter    2.21 px
+         the letter of the font to the middle letter       1.47 px
+     In 55 of the 59 forms the letter of the font is nearer to the middle than
+     most of the scribe's own instances. The other four: final ba' (61
+     instances; its tail lies a little lower than usual) and three rare forms
+     of which only 5 to 9 instances were found. Three forms (isolated 'ayn,
+     final qaf, final sad) have fewer than five instances and cannot be judged
+     this way.
+     The same script measures every page:
+       Size of the writing: folios 71–77 are 0.76 to 0.89 of Birmingham (median
+         0.85); folios 78–86 are 0.87 to 0.98 (median 0.94). The three enlarged
+         pages (0.89, 0.83, 0.85) are confirmed. The lines used on folios 78 and
+         79 are at 0.93 to 0.97, so the three letters from them (isolated 'ayn
+         and qaf, final sad) are 3 to 7 % small. They are left as they are: their
+         strokes are already 9 to 13 % heavier, and enlarging adds to that.
+       Dots: 4,344 dashes on the 34 pages. Their length is the same everywhere
+         (22.4 to 23.3). The slant is 26 degrees on folios 71–77, 19.5 on
+         folios 78–86 and 22.4 in Birmingham. The dash of the font is the
+         Birmingham one and is unchanged.
+     A warning: an instance is found because it looks like the letter of the
+     font. A letter the scribe wrote very differently is not found, so his
+     true variation is larger than these figures.
 
 Not from the manuscript: hamza, vowel marks, digits, punctuation and the
 Kurdish diacritics, which it does not have, are drawn at the same weight;
 nine forms come from the Paris leaves of the same Qur'an, not from the two
 Birmingham leaves themselves, six of them from a page that is enlarged; flaked
-ink is filled in; where a letter is fused with its neighbour a 4 px neck is
+ink is filled in (check 1 does not count that as a fault; only check 6 can tell
+an eye from a flaked patch); where a letter is fused with its neighbour a 4 px neck is
 added, and the lam that stands on the final ha' is taken away by hand; each
 letter has one shape, where the scribe varies its length and size. The scribe
 leaves about the same gap between words as after an unjoined letter (median
@@ -186,7 +277,7 @@ legibility.
 Files
 -----
   BirminghamHijazi-Regular.ttf   the font
-  Previous version (v1 ...), (v2 ...), (v3 ...)   the earlier versions
+  Previous version (v1 ...), (v2 ...), (v3 ...), (v4 ...)   the earlier versions
   source/manuscript/full.jpg     the photograph of the two Birmingham pages
                                  (Cadbury Research Library; public domain,
                                  Wikimedia Commons)
@@ -207,6 +298,9 @@ Files
                                  variation.json
   source/variation.py            compares all instances of every letter
   source/module.py               measures the size of the writing of a page
+  source/census.py               looks for every form on every page: the middle letter
+                                 of each form, the size of the writing and the dots of
+                                 every page -> audit/census.json, audit/census/
   source/compare_sheet.py        side-by-side sheets of exemplar and outline
   source/make_readme_figures.py  draws the figures in ../docs/images/ shown in the
                                  README at the root of the repository
@@ -222,6 +316,8 @@ Rebuild:  pip install fonttools shapely numpy pillow scipy scikit-image freetype
           python build.py ../BirminghamHijazi-Regular.ttf
           python audit.py ../BirminghamHijazi-Regular.ttf _dump audit
           python variation.py traced.json.alts audit/variation.json
+          python census.py _census          (about six minutes; then copy census.json and
+                                             forms/*.jpg to audit/ and audit/census/)
           python make_readme_figures.py
           (_qa, _dump and traced.json.alts are working files and can be deleted;
            lines.json is already there, find_lines.py made its Paris part;

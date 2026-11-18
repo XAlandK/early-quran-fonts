@@ -327,15 +327,18 @@ def refine(mask, g, others, opt, forced=None):
     ref = (mk | grow) & ~peel
     if forced is not None and forced.any():                      # ink marked by hand as flaked away
         ref |= enlarge(forced[r0:r1, c0:c1], 0) > 0.5
-    ref = ndi.binary_closing(ref, structure=disk(1.4 * K))       # cracks in the ink
-    # pale patches shut inside the ink: a counter if it is wide, flaked ink if it is a mere crack
+    ref = ndi.binary_closing(ref, structure=disk(opt.get('crack', 1.4) * K))       # cracks in the ink
+    # pale patches shut inside the ink: a counter if it is wide, flaked ink if it is a mere crack.
+    # The eye of some letters is itself a slit no wider than a crack (final mim): for those the
+    # width at which a pale patch counts is set lower, by 'crack' and 'eye' in exemplars.py.
     shut = light & ~peel & ref
-    wide = ndi.binary_opening(shut, structure=disk(1.5 * K))
+    eye = opt.get('eye', 1.5)
+    wide = ndi.binary_opening(shut, structure=disk(eye * K))
     lab, n = ndi.label(wide)
     if n:
         sizes = ndi.sum(wide, lab, np.arange(1, n + 1))
-        big = np.isin(lab, [i for i, sz in enumerate(sizes, 1) if sz >= 12 * K * K])
-        ref &= ~ndi.binary_propagation(big, mask=shut & ndi.binary_dilation(big, structure=disk(1.5 * K)))
+        big = np.isin(lab, [i for i, sz in enumerate(sizes, 1) if sz >= opt.get('eye_min', 12) * K * K])
+        ref &= ~ndi.binary_propagation(big, mask=shut & ndi.binary_dilation(big, structure=disk(eye * K)))
     ref = fill_small_holes(ref, max(opt.get('hole', 0), 14) * K * K)
     lab, n = ndi.label(ref)
     if n > 1:
@@ -630,7 +633,7 @@ def run(full_jpg, lines_json, out_json, qa_dir=None, only=None, dump_dir=None):
                                         x_left=x_l - b0, adv=adv,
                                         ybase=np.array([ybase(c) for c in range(b0, b1)]) - a0,
                                         cuts=np.array([e[0] - b0 for e in edges.values()]),
-                                        hole=opt.get('hole', 0), u0=xa + b0, t0=a0 - UP,
+                                        hole=opt.get('hole', 0), crack=opt.get('crack', 1.4), u0=xa + b0, t0=a0 - UP,
                                         page=pg, line=ln)
             b = geom.bounds
             print('    %-14s adv=%4d  x[%4d,%4d] y[%4d,%4d]  cut r=%s l=%s  th=%s' % (

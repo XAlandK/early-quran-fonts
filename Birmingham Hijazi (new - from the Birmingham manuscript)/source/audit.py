@@ -131,7 +131,7 @@ def audit_one(ft, order, key, d, out_dir=None, full_res=False):
     others = enlarge((i2 & ~ndi.binary_dilation(m2, structure=T.disk(2))).astype(np.float32), order=1) > 0.5
     region = ndi.binary_dilation(mz, structure=T.disk(int(2.5 * Z))) & ~ndi.binary_dilation(others, structure=T.disk(Z))
     ref = (gz < thr) & region
-    ref = ndi.binary_closing(ref, structure=T.disk(1.4 * Z))
+    ref = ndi.binary_closing(ref, structure=T.disk(float(d['crack']) * Z if 'crack' in d else 1.4 * Z))
     # the glyph, from the font file
     x0 = (float(d['x_left']) + 0.5) * Z
     y0 = (yb0 + 0.5) * Z + T.BL * T.PXU * Z

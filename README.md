@@ -17,7 +17,7 @@ alphabet.*
 
 | Font | Source | Status |
 |---|---|---|
-| [Birmingham Hijazi](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29) | The Birmingham Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a), parchment dated 568–645 CE, and the leaves of the same Qur'an in Paris (BnF Arabe 328, folios 71–86) | Version 4.000 — all 62 letter forms and the dots traced from the manuscript and checked against it pixel by pixel ([README](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/README.txt)) |
+| [Birmingham Hijazi](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29) | The Birmingham Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a), parchment dated 568–645 CE, and the leaves of the same Qur'an in Paris (BnF Arabe 328, folios 71–86) | Version 4.100 — all 62 letter forms and the dots traced from the manuscript, checked against it pixel by pixel and against all 34 pages of the same Qur'an ([README](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/README.txt)) |
 | [Madinah Naqsh](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29) | A rock inscription near Medina carrying Qur'an 33:70–71 | Draft 0.200 — 28 letter forms: the centre line and the width of every stroke, taken from a small photograph ([README](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29/README.txt)) |
 
 Both fonts write Arabic and Kurdish (Sorani), have Arabic joining, lam-alef,
@@ -61,15 +61,45 @@ What was measured, in pixels of the Birmingham photograph (one pixel is about
 | Check | Result |
 |---|---|
 | The font against the letter it was traced from (62 forms) | 0.15 px on average; 95 % of the outline within 0.41 px |
-| Two instances of the same letter in the scribe's own hand (391 instances traced) | 2.00 px apart |
-| The letter the font uses against the scribe's other instances of it | 1.88 px |
+| Two instances of the same letter in the scribe's own hand (390 instances traced) | 2.00 px apart |
+| The letter the font uses against the scribe's other instances of it | 1.85 px |
 | A letter on the Paris leaves against the same letter in Birmingham (26 letters) | 1.85 px |
 | The dots: 319 dashes of the manuscript measured | length 24.0 px, thickness 7.6 px, slant 22.5°; the font's dot is one of them, traced |
 
 The scribe did not write every page at the same size: on three of the Paris
 pages the letters are smaller and the pen finer (0.83–0.89 of the Birmingham
 writing), and those pages are enlarged by that much before a letter is taken
-from them. The
+from them.
+
+Version 4.1 adds a check over the whole Qur'an. Every form of the font is laid
+over each of the 34 pages (2 in Birmingham, 32 in Paris), and the places where
+it fits are taken as instances of that letter.
+
+![The middle letter of eleven forms, with the outline of the font over it](docs/images/birmingham-hijazi-census.jpg)
+
+*The scribe's "middle letter" of eleven forms: the grey shows how many of the
+instances found on the 34 pages have ink at each point (black: all of them),
+the red line is the outline of the font's letter. Blue marks ink that most
+instances have and the font lacks, orange ink of the font that few instances
+have. First row: medial ha', final
+mim, isolated waw, medial fa'. Second row: initial kaf, initial sad. Third row:
+isolated alif, initial lam, medial ta', initial ha', final nun.*
+
+| Check over all 34 pages | Result |
+|---|---|
+| Places looked at; instances accepted | 14,664; 10,049, of 59 forms |
+| An instance of the scribe against the middle letter of its form | 2.21 px |
+| The letter of the font against the middle letter | 1.47 px |
+| Forms in which the font's letter is nearer to the middle than most instances | 55 of 59 |
+| Size of the writing | folios 71–77: 0.76–0.89 of Birmingham; folios 78–86: 0.87–0.98 |
+| Dots measured | 4,344 dashes; same length everywhere, slant 19.5° to 26° by gathering |
+
+This check found two faults inside letters that the comparison of outlines
+could not see. In medial ha' the ink of the exemplar had flaked and a flaked
+patch had been taken for the eye of the letter; in final mim the eye, a slit
+about 3 px wide, had been closed as if it were a crack. Both are corrected.
+An instance is found because it looks like the font's letter, so the scribe's
+true variation is larger than these figures. The
 [README of the font](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/README.txt)
 describes each check and what in the font is not from the manuscript.
 
