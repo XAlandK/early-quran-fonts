@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """
 Birmingham Hijazi — build script (version 3).
 
@@ -828,6 +830,11 @@ def build(out_path):
         "fullName": "Birmingham Hijazi Regular",
         "psName": "BirminghamHijazi-Regular",
         "version": "Version 3.000",
+        "copyright": "Copyright (c) 2026 Aland Kawa Ali",
+        "licenseDescription": ("Licensed under the Aland Attribution & Non-Commercial License (AANCL) v1.0. "
+                               "Attribution is required; commercial use requires prior written permission. "
+                               "See the LICENSE file."),
+        "licenseInfoURL": "https://github.com/XAlandK/early-quran-fonts/blob/main/LICENSE",
         "description": ("Hijazi typeface whose letterforms are traced from the ink of the Birmingham "
                         "Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a). "
                         "ss01: rasm only (no dots). ss02: hide vowel marks."),

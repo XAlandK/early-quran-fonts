@@ -8,8 +8,8 @@ Birmingham Hijazi — v3.000
 دەستنووسەکە بە کاربۆنی ڕادیۆیی ٥٦٨–٦٤٥ ی زایینییە.
 
 وەشانەکان:
-  v1  بە دەست کێشرابوو (لە فۆڵدەری «وەشانی پێشوو (v1)» دایە).
-  v2  یەکەم هێڵکاری لە وێنەکەوە (لە فۆڵدەری «وەشانی پێشوو (v2)» دایە).
+  v1  بە دەست کێشرابوو (لە فۆڵدەری «Previous version (v1 - hand-drawn)» دایە).
+  v2  یەکەم هێڵکاری لە وێنەکەوە (لە فۆڵدەری «Previous version (v2 - first tracing)» دایە).
   v3  دوای پشکنینی پیکسڵ بە پیکسڵ. ئەمانە چاک کران:
       - لێواری مەرەکەب بە یەک ئاستی ڕەنگ بۆ هەموو پەڕەکە دیاری دەکرا، بۆیە
         هێڵە کاڵەکان نزیکەی نیو پیکسڵ لە هەر لایەک باریکتر دەردەچوون. ئێستا
@@ -111,7 +111,9 @@ Files
   source/audit.py                lays the built font over the manuscript and measures
   source/audit/                  its pictures (one per form) and audit.json
   source/compare_sheet.py        side-by-side sheets of exemplar and outline
-  source/make_preview.py         rebuilds ../پیشاندانی-فۆنتەکان.html
+  source/make_preview.py         rebuilds ../پیشاندانی-فۆنتەکان.html, the Kurdish/English
+                                 preview page of all the fonts (needs the Madinah
+                                 photographs, which are not in the public repository)
 
 Rebuild:  pip install fonttools shapely numpy pillow scipy scikit-image freetype-py
           cd source
@@ -121,5 +123,21 @@ Rebuild:  pip install fonttools shapely numpy pillow scipy scikit-image freetype
           python make_preview.py
           (the _dump folder is only needed by audit.py and can be deleted)
 
-No license has been chosen yet; the letterforms of a 7th-century manuscript
-are in the public domain.
+License
+-------
+Copyright (c) 2026 Aland Kawa Ali
+
+The font and its source are licensed under the Aland Attribution &
+Non-Commercial License (AANCL) v1.0; see the LICENSE file at the root of the
+repository. Attribution is mandatory: credit Aland Kawa Ali, keep the copyright
+notice and license intact, and mark any changes. Commercial use requires prior
+written permission from the copyright holder.
+
+The license covers the font and the code, not the manuscript. The letterforms
+of the 7th-century manuscript, and the photographs of it in source/manuscript/
+(Wikimedia Commons), are in the public domain; see THIRD_PARTY_NOTICES.md.
+
+مۆڵەت: فۆنتەکە و سەرچاوەکەی لە ژێر مۆڵەتی AANCL v1.0 دان (فایلی LICENSE لە
+ڕەگی ڕیپۆکەدا)، مافی لەبەرگرتنەوە بۆ Aland Kawa Ali. ناوهێنانی خاوەنەکەی
+پێویستە؛ بەکارهێنانی تیجاری ڕەزامەندیی نووسراوی پێشوەختەی دەوێت. دەستنووسەکە
+خۆی و وێنەکانی Public Domain ن و ئەم مۆڵەتە نایانگرێتەوە.

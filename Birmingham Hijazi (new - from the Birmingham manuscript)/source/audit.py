@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """
-Pixel audit: every traced glyph of the built font, laid over the carving of the
-exemplar it was traced from, at the same place and scale.  Distances are in pixels
-of the page made by prep.py, which enlarges the photograph 2.1 to 3.5 times; they are
-also given in pixels of the photograph itself.
+Pixel audit: every traced glyph of the built font, laid over the ink of the
+exemplar it was traced from, at the same place and scale.
 
 The reference is taken from the photograph again, independently of the outline
 that went into the font: the grey values of the exemplar are enlarged four
@@ -47,9 +47,6 @@ GLYPH = {'ALIF': 'uni0627', 'BEH': 'uni066E', 'NOON': 'uni06BA', 'YEH': 'uni0649
          'DAL': 'uni062F', 'REH': 'uni0631', 'SEEN': 'uni0633', 'SAD': 'uni0635', 'TAH': 'uni0637',
          'AIN': 'uni0639', 'FEH': 'uni06A1', 'QAF': 'uni066F', 'KAF': 'uni0643', 'LAM': 'uni0644',
          'MEEM': 'uni0645', 'HEH': 'uni0647', 'WAW': 'uni0648', 'LAMALEF': 'lam_alef'}
-
-
-LINES = json.load(open(os.path.join(HERE, 'lines.json')))
 
 
 def glyph_name(key):
@@ -164,9 +161,7 @@ def audit_one(ft, order, key, d, out_dir=None, full_res=False):
     dA = ndi.distance_transform_edt(~eA) / Z
     sgn = (ndi.distance_transform_edt(~B) - ndi.distance_transform_edt(B)) / Z   # + outside the ink
     dist = np.concatenate([dB[eA], dA[eB]])
-    sc = float(LINES[str(d['page'])][int(d['line']) - 1].get('scale', 1.0))     # page px per px of the photograph
-    res = {'key': key, 'scale': sc, 'edge_photo': float(dist.mean()) / sc, 'p95_photo': float(np.percentile(dist, 95)) / sc,
-           'iou': inter / max(union, 1), 'edge': float(dist.mean()), 'p95': float(np.percentile(dist, 95)),
+    res = {'key': key, 'iou': inter / max(union, 1), 'edge': float(dist.mean()), 'p95': float(np.percentile(dist, 95)),
            'max': float(dist.max()), 'bias': float(sgn[eA].mean()), 'area': A.sum() / max(B.sum(), 1),
            'flaked': flaked / max(B.sum(), 1), 'ink': dark, 'paper': paper, 'thr': float(np.median(half[m2]))}
     if out_dir:
@@ -214,8 +209,7 @@ def main():
             r['key'], r['iou'], r['edge'], r['p95'], r['max'], r['bias'], r['area'], r['ink'], r['paper'], r['thr']))
     f = lambda k: float(np.mean([r[k] for r in rows]))
     print('%-14s %6.3f %6.2f %6.2f %6.2f %+7.2f %6.3f' % ('MEAN', f('iou'), f('edge'), f('p95'), f('max'), f('bias'), f('area')))
-    mean = {k: round(f(k), 4) for k in ('iou', 'edge', 'p95', 'max', 'bias', 'area', 'edge_photo', 'p95_photo')}
-    print('in pixels of the photograph itself: edge %.2f, p95 %.2f' % (mean['edge_photo'], mean['p95_photo']))
+    mean = {k: round(f(k), 4) for k in ('iou', 'edge', 'p95', 'max', 'bias', 'area')}
     json.dump({'font': os.path.basename(font), 'glyphs': len(rows), 'mean': mean,
                'rows': [{k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items()} for r in rows]},
               open(os.path.join(out_dir, 'audit.json'), 'w'), indent=1)

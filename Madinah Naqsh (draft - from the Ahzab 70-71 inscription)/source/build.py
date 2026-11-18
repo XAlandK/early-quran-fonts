@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """
 Madinah Naqsh — build script (draft 0.1).
 
@@ -893,6 +895,11 @@ def build(out_path):
         "fullName": "Madinah Naqsh Regular",
         "psName": "MadinahNaqsh-Regular",
         "version": "Version 0.100",
+        "copyright": "Copyright (c) 2026 Aland Kawa Ali",
+        "licenseDescription": ("Licensed under the Aland Attribution & Non-Commercial License (AANCL) v1.0. "
+                               "Attribution is required; commercial use requires prior written permission. "
+                               "See the LICENSE file."),
+        "licenseInfoURL": "https://github.com/XAlandK/early-quran-fonts/blob/main/LICENSE",
         "description": ("Draft typeface traced from a rock inscription of Qur'an 33:70-71 near Medina. "
                         "Photograph of the inscription: Muhammad al-Maghdhawi, @mohammed93athar on X "
                         "(https://x.com/mohammed93athar/status/1322206509770694656). 28 forms traced, the rest assembled. "

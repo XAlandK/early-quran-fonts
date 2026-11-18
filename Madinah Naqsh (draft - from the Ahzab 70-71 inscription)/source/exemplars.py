@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """Where each letter form was taken from in the inscription (Qur'an 33:70-71).
 
 page   'N', the page made by prep.py: line 1 is the fifth (lowest, largest) line of the

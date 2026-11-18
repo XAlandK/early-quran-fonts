@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Copyright (c) 2026 Aland Kawa Ali
+# Licensed under AANCL v1.0. See the LICENSE file.
 """
-Trace letterforms straight from the photograph of the Birmingham Qur'an
-manuscript (Mingana Islamic Arabic 1572a).
+Trace letterforms from the photograph of a rock inscription near Medina that carries
+Qur'an 33:70-71 (photograph: Muhammad al-Maghdhawi, @mohammed93athar).
 
-For every letter form one exemplar is picked in the manuscript.  The line it
+This is the tracer of the Birmingham Hijazi font, set up for the page that prep.py makes
+from the photograph: the carving as dark letters on a light ground, every line level and
+at one letter size.  The photograph is small (its letters are 30 to 70 pixels tall), so the
+outlines follow the shape of the carving but not the detail of its edges.
+
+For every letter form one exemplar is picked in the inscription.  The line it
 sits in is turned level, the word is cut where the letters join, and the
 outline of the ink of that one letter is written out in font units.  Nothing
 is redrawn by hand: the outline in the font is the outline of the scribe's ink.
@@ -42,14 +49,13 @@ from exemplars import GROUPS  # noqa: E402
 
 PXU = 0.225        # manuscript pixels per font unit
 BL = 40            # font-unit height of the centre of the baseline stroke
-STD = 16.0         # thickness (px) every joining stroke is brought to at a join
+STD = 28.0         # thickness (px) every joining stroke is brought to at a join
                    # (the median of the joining strokes of the exemplars)
 UP, DN = 215, 150  # rows kept above / below the fitted baseline
 ABOVE, BELOW = 182, 128   # ink beyond these rows belongs to the neighbouring lines
 MARGIN = 150       # columns kept left and right of a group
-THR = 128          # first, rough separation of ink from parchment (for cutting the words apart)
-BEAR = 18          # side bearing (px) on a side that does not join: the scribe leaves
-                   # almost as much room after an unjoined letter as between words
+THR = 150          # first, rough separation of carving from rock (for cutting the words apart)
+BEAR = 13          # side bearing (px) on a side that does not join
 K = 3              # the edge of the ink is located on the grey values enlarged K times
 
 
@@ -63,6 +69,9 @@ class Page:
     def __init__(self, path, lines):
         self.rgb = np.asarray(Image.open(path).convert('RGB'))
         self.gray = self.rgb.astype(np.float32) @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
+        colour = os.path.join(os.path.dirname(path), 'page_rgb.jpg')      # the same page in the photograph's colours
+        if os.path.exists(colour):
+            self.rgb = np.asarray(Image.open(colour).convert('RGB'))
         self.lines = lines
         self.H, self.W = self.gray.shape
 
@@ -283,7 +292,12 @@ def refine(mask, g, others, opt, forced=None):
         sizes = ndi.sum(wide, lab, np.arange(1, n + 1))
         big = np.isin(lab, [i for i, sz in enumerate(sizes, 1) if sz >= 12 * K * K])
         ref &= ~ndi.binary_propagation(big, mask=shut & ndi.binary_dilation(big, structure=disk(1.5 * K)))
-    ref = fill_small_holes(ref, max(opt.get('hole', 0), 14) * K * K)
+    ref = fill_small_holes(ref, max(opt.get('hole', 0), 30) * K * K)
+    thin = opt.get('thin', 0.0) * K                              # px taken off (or, negative, put on) each side
+    if thin > 0.4:
+        ref = ndi.distance_transform_edt(ref) > thin
+    elif thin < -0.4:
+        ref = ndi.distance_transform_edt(~ref) <= -thin
     lab, n = ndi.label(ref)
     if n > 1:
         sizes = ndi.sum(ref, lab, np.arange(1, n + 1))
@@ -424,7 +438,7 @@ def to_units(fine, r0, c0, edges, yb_free, opt):
     adv = (x_right - x_left) / PXU
 
     pad = 3 * K
-    F = ndi.gaussian_filter(np.pad(fine.astype(np.float32), pad), opt.get('smooth', 0.45) * K)
+    F = ndi.gaussian_filter(np.pad(fine.astype(np.float32), pad), opt.get('smooth', 2.4) * K)
     rings = []
     for cont in measure.find_contours(F, 0.5):
         if len(cont) < 8:
@@ -439,11 +453,11 @@ def to_units(fine, r0, c0, edges, yb_free, opt):
         geom = p if geom is None else geom.symmetric_difference(p)
     if geom is None:
         return None, adv, (x_left, x_right), ybase
-    # specks and hairs thinner than half a pixel of the photograph
-    geom = geom.buffer(1.5).buffer(-3).buffer(1.5)
+    # bumps and notches smaller than the blur of the photograph
+    geom = geom.buffer(8).buffer(-16).buffer(8)
     if geom.is_empty:
         return None, adv, (x_left, x_right), ybase
-    geom = smooth_geom(geom, opt.get('soften', 7))
+    geom = smooth_geom(geom, opt.get('soften', 22))
     h = STD / PXU / 2
     if jr:      # an exact, shared end for the joining stroke
         geom = geom.difference(box(adv, BL - h - 25, adv + 300, BL + h + 25))
@@ -486,7 +500,8 @@ def run(full_jpg, lines_json, out_json, qa_dir=None, only=None, dump_dir=None):
         print(grp['id'])
         for n, it in enumerate(grp['items']):
             key, xr, xl = it[0], it[1], it[2]
-            opt = dict(it[3]) if len(it) > 3 else {}
+            opt = dict(grp.get('opt', {}))
+            opt.update(it[3] if len(it) > 3 else {})
             kind = key.split('.')[1].split('#')[0]
             cr, cl = int(round(U(xr)[0])) - xa, int(round(U(xl)[0])) - xa
             for k in ('erase', 'fill', 'drop'):
@@ -502,9 +517,9 @@ def run(full_jpg, lines_json, out_json, qa_dir=None, only=None, dump_dir=None):
                 opt['also'] = [(int(round(U(a, b)[0])) - xa, UP + int(round(U(a, b)[1]))) for (a, b) in opt['also']]
             y_loc = local_baseline(ink, (cr + cl) // 2, y_nom) + opt.get('dyb', 0)
             if kind in ('medi', 'fina'):
-                cr = snapped.setdefault(xr, cr if opt.get('exact') else snap(ink, cr, y_loc))
+                cr = snapped.setdefault(xr, cr if opt.get('exact', True) else snap(ink, cr, y_loc))
             if kind in ('init', 'medi'):
-                cl = snapped.setdefault(xl, cl if opt.get('exact') else snap(ink, cl, y_loc))
+                cl = snapped.setdefault(xl, cl if opt.get('exact', True) else snap(ink, cl, y_loc))
             try:
                 mask, edges, forced = extract(ink, kind, cr, cl, y_loc, opt)
             except TypeError:
