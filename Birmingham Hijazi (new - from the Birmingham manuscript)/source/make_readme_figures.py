@@ -8,11 +8,14 @@ Draw the figures shown in the README at the root of the repository.
   docs/images/birmingham-hijazi-specimen.png       text set in Birmingham Hijazi
   docs/images/birmingham-hijazi-vs-manuscript.jpg  manuscript lines, the same text in the font under each
   docs/images/birmingham-hijazi-audit.jpg          nine letters of the pixel audit
+  docs/images/birmingham-hijazi-paris-forms.jpg    the audit of the nine forms from the Paris leaves
   docs/images/madinah-naqsh-specimen.png           text set in Madinah Naqsh
 
-Only public-domain material (the Birmingham manuscript) and the two fonts are
-used. The photograph of the Medina inscription is not, because it belongs to
-its photographer.
+Only the two fonts and photographs of the manuscript itself are used: the
+Birmingham leaves (public domain) and, in the pictures of the nine forms taken
+from them, small crops of the Paris leaves (source gallica.bnf.fr / BnF). The
+photograph of the Medina inscription is not used, because it belongs to its
+photographer.
 
 Usage:  python make_readme_figures.py [project folder]
         (run audit.py first: the audit figure is made from source/audit/)
@@ -128,6 +131,9 @@ def manuscript_vs_font(out):
 # pictures of a row are chosen to have about the same total width-to-height ratio
 AUDIT_ROWS = (("ALIF.isol", "WAW.isol"), ("LAMALEF.isol", "HEH.fina"), ("AIN.medi", "TAH.medi"),
               ("KAF.isol", "LAM.init"), ("SAD.isol",))
+# the nine forms that do not occur on the two Birmingham pages and come from the Paris leaves
+PARIS_ROWS = (("MEEM.isol", "QAF.isol"), ("AIN.isol", "HAH.isol"), ("HAH.fina", "FEH.isol"),
+              ("FEH.fina", "SAD.fina"), ("TAH.fina",))
 
 
 def audit_grid(out, rows=AUDIT_ROWS, gap=20):
@@ -160,10 +166,12 @@ def main():
         ("طه ۔ ما انزلنا عليك القران لتشقى ۔ الا تذكره لمن يخشى", 92, rasm),
         ("بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", 92, None),
         ("ئەم فۆنتە لە دەستنووسی قورئانی بیرمینگهامەوە هێڵکاری کراوە", 80, None),
+        ("قوم نوح ۔ صلح ۔ سوف ۔ كيف ۔ محيط ۔ ورزق ربك ۔ تجوع ۔ متربص", 80, rasm),
         ("ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي", 74, None),
     ], os.path.join(OUT, "birmingham-hijazi-specimen.png")))
     print("lines", manuscript_vs_font(os.path.join(OUT, "birmingham-hijazi-vs-manuscript.jpg")))
     print("audit", audit_grid(os.path.join(OUT, "birmingham-hijazi-audit.jpg")))
+    print("paris", audit_grid(os.path.join(OUT, "birmingham-hijazi-paris-forms.jpg"), PARIS_ROWS))
     print("madinah", specimen(MN_TTF, [
         ("يايها الذين امنوا اتقوا الله وقولوا", 120, rasm),
         ("قولا سديدا يصلح لكم اعملكم", 120, rasm),

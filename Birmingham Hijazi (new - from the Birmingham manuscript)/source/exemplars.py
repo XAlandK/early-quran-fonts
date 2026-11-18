@@ -5,12 +5,22 @@
 
 page   L = folio 2 recto (Q 19:91 - 20:13), R = folio 1 verso (Q 18:23-31), as they
        sit side by side in the Cadbury Research Library photograph.
+       P071r ... P086v = the leaves of the same Qur'an that are in Paris (BnF Arabe
+       328, folios 71-86), brought to the scale of the Birmingham photograph (see
+       pages.py).  They give the nine forms that do not occur on L and R, and more
+       instances of other letters to compare with.
 line   index into lines.json (fitted baselines).
 items  (form, x_right, x_left[, options]) in pixels of the photograph.  On a side
        that joins, x is where the word is cut (snapped to the plainest column
        nearby); on a free side it is only a hint.
        A '#' after the form marks an alternative exemplar that is traced for
        comparison but not used in the font.
+options  hole    counters smaller than this (px2) are flaked ink and are filled
+         fill    rectangles (x, rows below the baseline, x, rows) of ink that has flaked away
+         erase   rectangles of ink that belongs to another letter; erase_poly: the same, a polygon
+         drop    rectangles taken out of the letter after it has been cut out
+         exact   cut exactly at the given x;  nosplit: do not part the letter at a neck
+         level   added to the grey level at which the edge of the ink is put
 """
 GROUPS = [
     # عليك القران لتشقى
@@ -35,7 +45,7 @@ GROUPS = [
         ('LAMALEF.isol#', 1855, 1755)]},
     # والسموت العلى
     {'id': 'L13b', 'page': 'L', 'line': 13, 'items': [
-        ('WAW.isol', 1445, 1340), ('ALIF.isol', 1330, 1280),
+        ('WAW.isol#', 1445, 1340), ('ALIF.isol', 1330, 1280),
         ('LAM.init#', 1255, 1185), ('SEEN.medi#', 1185, 1070), ('MEEM.medi#', 1070, 995), ('WAW.fina', 995, 900),
         ('BEH.isol', 905, 685),
         ('ALIF.isol#', 690, 630), ('LAM.init#', 605, 545), ('AIN.medi#', 545, 495), ('LAM.medi#', 495, 430),
@@ -65,7 +75,7 @@ GROUPS = [
         ('WAW.isol#', 1675, 1575), ('MEEM.init#', 1550, 1485), ('ALIF.fina#', 1485, 1420),
         ('BEH.init#', 1375, 1325), ('BEH.medi#', 1325, 1280), ('BEH.medi#', 1280, 1235), ('HEH.medi#', 1235, 1150),
         ('MEEM.medi#', 1150, 1060), ('ALIF.fina#', 1060, 1000),
-        ('WAW.isol#', 965, 870), ('MEEM.init#', 860, 785), ('ALIF.fina#', 785, 720),
+        ('WAW.isol', 965, 870), ('MEEM.init#', 860, 785), ('ALIF.fina#', 785, 720),
         ('BEH.init#', 705, 650), ('HAH.medi#', 650, 550), ('BEH.fina', 550, 355)]},
     # الثرى وان تجهر
     {'id': 'L16a', 'page': 'L', 'line': 16, 'items': [
@@ -97,14 +107,14 @@ GROUPS = [
     # الا هو له الاسما ا
     {'id': 'L17b', 'page': 'L', 'line': 17, 'items': [
         ('ALIF.isol#', 1615, 1535), ('LAMALEF.isol#', 1515, 1405),
-        ('HEH.init', 1345, 1280), ('WAW.fina#', 1280, 1210),
+        ('HEH.init#', 1345, 1280), ('WAW.fina#', 1280, 1210),
         ('LAM.init#', 1185, 1100), ('HEH.fina', 1100, 1020, {'hole': 40}),
         ('ALIF.isol#', 1005, 930), ('LAMALEF.isol#', 895, 805),
         ('SEEN.init', 735, 620, {'hole': 200}), ('MEEM.medi#', 620, 530), ('ALIF.fina#', 530, 475),
         ('ALIF.isol#', 455, 385)]},
     # وهل اتيك
     {'id': 'L18a', 'page': 'L', 'line': 18, 'items': [
-        ('WAW.isol#', 2505, 2415), ('HEH.init#', 2385, 2295), ('LAM.fina#', 2295, 2185),
+        ('WAW.isol#', 2505, 2415), ('HEH.init', 2385, 2295), ('LAM.fina#', 2295, 2185),
         ('ALIF.isol#', 2165, 2075),
         ('BEH.init#', 2035, 2000), ('BEH.medi#', 2000, 1965), ('KAF.fina#', 1965, 1715)]},
     # حديث موسى اذ
@@ -232,4 +242,54 @@ GROUPS = [
     {'id': 'L13q', 'page': 'L', 'line': 13, 'thr': 158, 'zoom': 2.2, 'items': [
         ('QAF.fina', 2083, 1900, {'exact': 1, 'nosplit': 1, 'hole': 200, 'drop': [(2079, -75, 2100, -10)],
                                       'erase': [(1968, 14, 2024, 57), (1950, 71, 2024, 140)]})]},
+    # ====================== the Paris leaves (BnF Arabe 328, ff. 71-86) ======================
+    # قوم صلح (Q 11:89): mim on its own; the ha' at the end of a word.  The lam stands on the
+    # place where the head of the ha' crosses the line, so it is taken away by hand.
+    {'id': 'P77r14', 'page': 'P077r', 'line': 14, 'items': [
+        ('QAF.init#', 1945, 1890), ('WAW.fina#', 1890, 1805), ('MEEM.isol', 1792, 1710),
+        ('SAD.init#', 1668, 1538)]},
+    {'id': 'P77r14h', 'page': 'P077r', 'line': 14, 'zoom': 2.0, 'items': [
+        ('HAH.fina', 1542, 1316, {'erase': [(1484, -150, 1540, -8)]})]},
+    # وما (the same line)
+    {'id': 'P77r14w', 'page': 'P077r', 'line': 14, 'items': [
+        ('WAW.isol#', 1296, 1236), ('MEEM.init#', 1220, 1160), ('ALIF.fina#', 1160, 1105)]},
+    # قوم نوح (Q 11:89)
+    {'id': 'P77r13', 'page': 'P077r', 'line': 13, 'zoom': 2.0, 'items': [
+        ('MEEM.isol#', 527, 443), ('BEH.init#', 425, 396), ('WAW.fina#', 396, 340),
+        ('HAH.isol#', 334, 152)]},                 # (a blot hangs under its tail)
+    # ينوح (Q 11:32): ha' on its own;  نوح (Q 11:36), موج (Q 11:42)
+    {'id': 'P75r03', 'page': 'P075r', 'line': 3, 'zoom': 2.0, 'items': [
+        ('HAH.isol', 1684, 1462, {'erase': [(1686, -20, 1691, 34)]})]},      # parted from the waw it touches
+    {'id': 'P75r09', 'page': 'P075r', 'line': 9, 'zoom': 2.0, 'items': [
+        ('BEH.init#', 1520, 1487), ('WAW.fina#', 1487, 1405)]},      # (its ha' has lost the ink of its hook)
+    {'id': 'P75r20', 'page': 'P075r', 'line': 20, 'zoom': 2.0, 'items': [('HAH.isol#', 1754, 1538)]},
+    # سوف (Q 11:93): fa' on its own
+    {'id': 'P77r21', 'page': 'P077r', 'line': 21, 'zoom': 2.0, 'items': [
+        ('SEEN.init#', 1648, 1582), ('WAW.fina#', 1582, 1486)]},
+    {'id': 'P77r21f', 'page': 'P077r', 'line': 21, 'zoom': 2.0, 'thr': 182, 'items': [
+        ('FEH.isol', 1451, 1253)]},                                       # the ink of its tail is pale
+    # فسوف (Q 11:39)
+    {'id': 'P75r14', 'page': 'P075r', 'line': 14, 'zoom': 2.0, 'items': [
+        ('FEH.init#', 1545, 1483), ('SEEN.medi#', 1483, 1402), ('WAW.fina#', 1402, 1316),
+        ('FEH.isol#', 1296, 1091)]},
+    # كيف (Q 10:35): fa' at the end of a word
+    {'id': 'P71r02', 'page': 'P071r', 'line': 2, 'zoom': 2.0, 'items': [('FEH.fina', 436, 248)]},
+    # يوم محيط (Q 11:84): ta' at the end of a word
+    {'id': 'P77r02', 'page': 'P077r', 'line': 2, 'zoom': 2.0, 'items': [
+        ('MEEM.isol#', 1226, 1160), ('TAH.fina', 989, 838, {'exact': 1})]},     # cut before the tooth of the ya'
+    # محيط (Q 11:92), بالقسط (Q 10:47)
+    {'id': 'P77r20', 'page': 'P077r', 'line': 20, 'zoom': 2.0, 'items': [('TAH.fina#', 1245, 1080)]},
+    {'id': 'P71r23', 'page': 'P071r', 'line': 23, 'zoom': 2.0, 'items': [
+        ('LAM.init#', 1440, 1385), ('QAF.medi#', 1385, 1335), ('SEEN.medi#', 1335, 1200), ('TAH.fina#', 1200, 1080)]},
+    # ورزق (Q 20:131): qaf on its own
+    {'id': 'P79r01', 'page': 'P079r', 'line': 1, 'zoom': 2.0, 'items': [
+        ('WAW.isol#', 2656, 2572), ('REH.isol#', 2537, 2463), ('REH.isol#', 2449, 2376),
+        ('QAF.isol', 2342, 2162, {'erase': [(2140, -52, 2268, 26)]})]},   # the ra' of the next word stands over its tail
+    # قل ... بص of متربص (Q 20:135): sad at the end of a word
+    {'id': 'P79r07', 'page': 'P079r', 'line': 7, 'zoom': 2.0, 'items': [
+        ('QAF.init#', 2000, 1940), ('LAM.fina#', 1940, 1840),
+        ('BEH.init#', 1590, 1550), ('SAD.fina', 1550, 1258)]},
+    # تجوع (Q 20:118): 'ayn on its own
+    {'id': 'P78v03', 'page': 'P078v', 'line': 3, 'zoom': 2.0, 'items': [
+        ('LAMALEF.isol#', 1625, 1535), ('WAW.fina#', 1372, 1296), ('AIN.isol', 1266, 1054), ('FEH.init#', 1012, 952)]},
 ]

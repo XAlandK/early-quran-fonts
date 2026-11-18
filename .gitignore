@@ -3,6 +3,13 @@
 __pycache__/
 *.pyc
 _dump/
+_qa/
+*.alts
+
+# Photographs of the Paris leaves of the Birmingham manuscript (BnF Arabe 328,
+# folios 71-86), 93 MB. They are not kept here: source/fetch_bnf.py downloads
+# them from the Bibliotheque nationale de France.
+/Birmingham Hijazi*/source/manuscript/bnf/
 
 # Photographs by Muhammad al-Maghdhawi (@mohammed93athar on X), and files that
 # reproduce them. They are his work and are not published in this repository

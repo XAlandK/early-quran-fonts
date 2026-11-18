@@ -35,7 +35,7 @@ def cell(page, key, rec, scale=None, parts=False):
     # manuscript
     xa = int(src['x0'] + XL * T.PXU) - 2
     xb = int(src['x1'] + XR * T.PXU) + 2
-    g, rgb = page.deskew(src['page'], src['line'], xa, xb)
+    g, rgb = page.deskew(src['page'], src['line'], xa, xb, src.get('fit'))
     r0 = int(src['yb'] - (YT - T.BL) * T.PXU)
     r1 = int(src['yb'] + (T.BL - YB) * T.PXU)
     pad = np.full((max(r1, rgb.shape[0]) - min(r0, 0), rgb.shape[1], 3), 235, dtype=np.uint8)

@@ -23,7 +23,8 @@ no charge from the repositories above, at the tags `v2.00`.
 ## Photographs of the Birmingham Qur'an manuscript
 
 The files in `Birmingham Hijazi (new - from the Birmingham manuscript)/source/manuscript/`,
-and the crops of them in that folder's `source/audit/` and in
+and the crops of them in that folder's `source/audit/` (the letters from
+folios 2 recto and 1 verso) and in
 `docs/images/birmingham-hijazi-vs-manuscript.jpg` and
 `docs/images/birmingham-hijazi-audit.jpg`, are photographs of the
 Birmingham Qur'an manuscript (Cadbury Research Library, University of Birmingham,
@@ -32,6 +33,28 @@ they are marked as public domain:
 https://commons.wikimedia.org/wiki/Category:Birmingham_Quran_manuscript
 
 The manuscript itself, a 7th-century text, is in the public domain.
+
+## Photographs of the Paris leaves of the same manuscript
+
+Sixteen more leaves of the Qur'an that the two Birmingham leaves come from are
+in the Bibliothèque nationale de France (Département des Manuscrits, Arabe 328,
+folios 71–86). Nine letter forms of Birmingham Hijazi that do not occur on the
+two large Birmingham pages are traced from the library's photographs of these
+leaves, and other letters on them were traced for comparison.
+
+Source: gallica.bnf.fr / Bibliothèque nationale de France,
+https://gallica.bnf.fr/ark:/12148/btv1b8415207g
+
+The photographs themselves are **not** included in this repository;
+`source/fetch_bnf.py` downloads them from the library. What the repository
+contains is the outlines traced from them (`traced.json`), the baselines of
+their lines (`lines.json`), and small crops of single letters in the audit
+pictures (`source/audit/` and `docs/images/birmingham-hijazi-paris-forms.jpg`).
+
+The library allows non-commercial reuse of these photographs free of charge,
+provided the source is named as above; commercial reuse of the photographs
+needs a licence from the library (see "Conditions d'utilisation des contenus de
+Gallica" on gallica.bnf.fr). The manuscript itself is in the public domain.
 
 ## Photograph of the rock inscription used for Madinah Naqsh
 

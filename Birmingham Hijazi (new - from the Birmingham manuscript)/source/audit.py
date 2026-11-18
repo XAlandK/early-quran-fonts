@@ -17,6 +17,11 @@ For each glyph it reports, in pixels of the photograph:
   p95    the distance that 95 % of the outline stays within
   bias   mean signed distance (+ the font is fatter than the ink, - thinner)
   area   area of the font glyph / area of the ink
+  other  ink that touches the letter between its cuts but was not taken into
+         it, as a share of the letter.  Nothing should touch a letter but its
+         neighbours at the cuts; where something does (a stem of the line
+         below, a letter standing on it) the picture shows whether it was
+         right to leave it out.
 
 For each glyph it also writes a picture of three panels: the exemplar in the
 photograph; the same with the outline of the ink (light blue) and, over it, the
@@ -161,7 +166,18 @@ def audit_one(ft, order, key, d, out_dir=None, full_res=False):
     dA = ndi.distance_transform_edt(~eA) / Z
     sgn = (ndi.distance_transform_edt(~B) - ndi.distance_transform_edt(B)) / Z   # + outside the ink
     dist = np.concatenate([dB[eA], dA[eB]])
-    res = {'key': key, 'iou': inter / max(union, 1), 'edge': float(dist.mean()), 'p95': float(np.percentile(dist, 95)),
+    # other ink that touches the letter (on the crop itself, before the levelling above)
+    free = np.ones(mask.shape, dtype=bool)
+    if form in ('medi', 'fina'):
+        free[:, int(cuts[-1]) - 2:] = False
+    if form in ('init', 'medi'):
+        free[:, :int(cuts[0]) + 3] = False
+    rest = ink & ~mask & free
+    lab, _ = ndi.label(rest)
+    ids = set(lab[ndi.binary_dilation(mask, structure=T.disk(3)) & rest].ravel().tolist()) - {0}
+    other = float(np.isin(lab, list(ids)).sum() / max(mask.sum(), 1))
+    res = {'key': key, 'page': str(d['page']), 'other': other,
+           'iou': inter / max(union, 1), 'edge': float(dist.mean()), 'p95': float(np.percentile(dist, 95)),
            'max': float(dist.max()), 'bias': float(sgn[eA].mean()), 'area': A.sum() / max(B.sum(), 1),
            'flaked': flaked / max(B.sum(), 1), 'ink': dark, 'paper': paper, 'thr': float(np.median(half[m2]))}
     if out_dir:
@@ -203,10 +219,11 @@ def main():
         if only and key not in only:
             continue
         rows.append(audit_one(ft, order, key, np.load(path), out_dir, full_res))
-    print('%-14s %6s %6s %6s %6s %7s %6s   %s' % ('glyph', 'IoU', 'edge', 'p95', 'max', 'bias', 'area', 'ink/paper/half'))
+    print('%-14s %6s %6s %6s %6s %7s %6s %6s   %s' % ('glyph', 'IoU', 'edge', 'p95', 'max', 'bias', 'area', 'other', 'ink/paper/half'))
     for r in rows:
-        print('%-14s %6.3f %6.2f %6.2f %6.2f %+7.2f %6.3f   %3.0f/%3.0f/%3.0f' % (
-            r['key'], r['iou'], r['edge'], r['p95'], r['max'], r['bias'], r['area'], r['ink'], r['paper'], r['thr']))
+        print('%-14s %6.3f %6.2f %6.2f %6.2f %+7.2f %6.3f %5.0f%%   %3.0f/%3.0f/%3.0f' % (
+            r['key'], r['iou'], r['edge'], r['p95'], r['max'], r['bias'], r['area'], 100 * r['other'],
+            r['ink'], r['paper'], r['thr']))
     f = lambda k: float(np.mean([r[k] for r in rows]))
     print('%-14s %6.3f %6.2f %6.2f %6.2f %+7.2f %6.3f' % ('MEAN', f('iou'), f('edge'), f('p95'), f('max'), f('bias'), f('area')))
     mean = {k: round(f(k), 4) for k in ('iou', 'edge', 'p95', 'max', 'bias', 'area')}

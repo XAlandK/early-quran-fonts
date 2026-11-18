@@ -41,6 +41,7 @@ from skimage.segmentation import watershed
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from exemplars import GROUPS  # noqa: E402
+import pages as PG  # noqa: E402
 
 PXU = 0.225        # manuscript pixels per font unit
 BL = 40            # font-unit height of the centre of the baseline stroke
@@ -62,31 +63,71 @@ def disk(r):
 
 
 class Page:
-    def __init__(self, path, lines):
-        self.rgb = np.asarray(Image.open(path).convert('RGB'))
-        self.gray = self.rgb.astype(np.float32) @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
-        self.lines = lines
-        self.H, self.W = self.gray.shape
+    """The photographs, and the fitted baselines of their lines.
 
-    def to_line(self, page, idx, x, dy=0.0):
+    Page keys L and R are the two pages of the Birmingham photograph; P071r ... are the
+    Paris leaves of the same Qur'an, brought to the same scale, and a page on which the
+    scribe wrote smaller to the same size of writing (see pages.py)."""
+
+    def __init__(self, path, lines):
+        self.path = path
+        self.lines = lines
+        self._sheets = {}
+
+    def sheet(self, page):
+        key = 'LR' if page in ('L', 'R') else page
+        if key not in self._sheets:
+            rgb = np.asarray(Image.open(self.path).convert('RGB')) if key == 'LR' else PG.load(page)
+            gray = rgb.astype(np.float32) @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
+            for k in [k for k in self._sheets if k != 'LR'][:-1]:      # the pictures are large
+                del self._sheets[k]
+            self._sheets[key] = (rgb, gray)
+        return self._sheets[key]
+
+    @property
+    def rgb(self):
+        return self.sheet('L')[0]
+
+    @property
+    def gray(self):
+        return self.sheet('L')[1]
+
+    def line(self, page, idx, at=None):
+        """The baseline of a line as a straight line {x0, r, m}.  Where the baseline is kept
+        as a string of points (the Paris leaves, which are not flat), a straight line is
+        fitted through the points near x = at."""
+        L = self.lines[page][idx - 1]
+        if 'pts' not in L:
+            return L
+        pts = np.array(L['pts'], dtype=float) / PG.module(page)
+        if at is None:
+            at = float(pts[:, 0].mean())
+        near = pts[np.abs(pts[:, 0] - at) <= 420]
+        if len(near) < 4:
+            near = pts[np.argsort(np.abs(pts[:, 0] - at))[:4]]
+        m, c = np.polyfit(near[:, 0], near[:, 1], 1)
+        return {'x0': float(at), 'r': float(m * at + c), 'm': float(m)}
+
+    def to_line(self, page, idx, x, dy=0.0, fit=None):
         """A point of the photograph given as (x, distance below the baseline at x) ->
         (distance along the levelled line, distance below it)."""
-        L = self.lines[page][idx - 1]
+        L = fit or self.line(page, idx, x)
         th = math.atan(L['m'])
         return L['x0'] + (x - L['x0']) / math.cos(th) + dy * math.sin(th), dy * math.cos(th)
 
-    def deskew(self, page, idx, ua, ub):
+    def deskew(self, page, idx, ua, ub, fit=None):
         """Columns ua..ub of a line (measured along its baseline), turned rigidly so that
         the fitted baseline is horizontal (row UP)."""
-        L = self.lines[page][idx - 1]
+        L = fit or self.line(page, idx, (ua + ub) / 2)
+        rgb_, gray = self.sheet(page)
         th = math.atan(L['m'])
         cs, sn = math.cos(th), math.sin(th)
         s = np.arange(ua, ub, dtype=np.float32) - L['x0']
         t = np.arange(-UP, DN, dtype=np.float32)
         X = L['x0'] + s[None, :] * cs - t[:, None] * sn
         Y = L['r'] + s[None, :] * sn + t[:, None] * cs
-        g = ndi.map_coordinates(self.gray, [Y, X], order=3, mode='constant', cval=255.0)
-        c = np.stack([ndi.map_coordinates(self.rgb[..., k].astype(np.float32), [Y, X], order=1,
+        g = ndi.map_coordinates(gray, [Y, X], order=3, mode='constant', cval=255.0)
+        c = np.stack([ndi.map_coordinates(rgb_[..., k].astype(np.float32), [Y, X], order=1,
                                           mode='constant', cval=235.0) for k in range(3)], axis=-1)
         return g.astype(np.float32), np.clip(c, 0, 255).astype(np.uint8)
 
@@ -102,6 +143,16 @@ def ink_mask(g, thr, hole):
             if sz < hole:
                 ink[lab == i] = True
     return ink
+
+
+def rough_level(g):
+    """Grey half-way between the parchment and the ink of the line in this crop."""
+    band = ndi.gaussian_filter(g, 0.7)[UP - 60:UP + 40]
+    paper = float(np.percentile(band, 85))
+    ink = band[band < paper - 35]
+    if ink.size < 200:
+        return THR
+    return float(np.clip((paper + np.percentile(ink, 25)) / 2 + 6, THR, 178))
 
 
 def baseline_run(ink, col, y0, reach=20):
@@ -475,11 +526,20 @@ def run(full_jpg, lines_json, out_json, qa_dir=None, only=None, dump_dir=None):
         if only and grp['id'] not in only:
             continue
         pg, ln = grp['page'], grp['line']
-        U = lambda x, dy=0.0: page.to_line(pg, ln, x, dy)       # photograph -> levelled line
-        us = [U(x)[0] for it in grp['items'] for x in it[1:3]]
+        z = 1.0 / PG.module(pg)            # exemplars.py gives places at the plain scale of the page;
+        #                                    a page written smaller is enlarged (pages.MODULE)
+        xs_ = [x for it in grp['items'] for x in it[1:3]]
+        fit = page.line(pg, ln, z * (min(xs_) + max(xs_)) / 2)  # one straight baseline for the group
+        if 'r' in grp:                                         # ... or the row given by hand
+            fit = dict(fit, r=fit['r'] + z * grp['r'])
+        U = lambda x, dy=0.0: page.to_line(pg, ln, z * x, z * dy, fit)  # photograph -> levelled line
+        us = [U(x)[0] for x in xs_]
         xa, xb = int(min(us)) - MARGIN, int(max(us)) + MARGIN
-        g, rgb = page.deskew(pg, ln, xa, xb)
-        ink = ink_mask(g, grp.get('thr', THR), grp.get('hole', 14))
+        g, rgb = page.deskew(pg, ln, xa, xb, fit)
+        thr = grp.get('thr', THR if pg in ('L', 'R') else 'auto')
+        if thr == 'auto':                  # the ink of the Paris leaves is paler, and not equally pale
+            thr = rough_level(g)
+        ink = ink_mask(g, thr, grp.get('hole', 14))
         y_nom = UP + grp.get('dy', 0)
         snapped = {}
         qa = Image.fromarray(rgb).convert('RGBA')
@@ -552,6 +612,10 @@ def run(full_jpg, lines_json, out_json, qa_dir=None, only=None, dump_dir=None):
             src = {'page': pg, 'line': ln, 'id': grp['id'],
                    'x0': round(float(x_l + xa), 2), 'x1': round(float(x_r + xa), 2),
                    'yb': round(float(np.mean([e[1] for e in edges.values()])) if edges else y_loc, 2)}
+            if 'pts' in page.lines[pg][ln - 1] or 'r' in grp:
+                src['fit'] = {k: round(float(v), 5) for k, v in fit.items()}
+            if z != 1.0:
+                src['enlarged'] = round(z, 4)
             rec = {'adv': round(float(adv), 1), 'wkt': geom.wkt, 'src': src}
             out.setdefault('_all', {})[name + '@' + grp['id'] + (':%d' % n)] = rec
             if '#' not in key:
