@@ -3,7 +3,7 @@
 # Copyright (c) 2026 Aland Kawa Ali
 # Licensed under AANCL v1.0. See the LICENSE file.
 """
-Madinah Naqsh — build script (draft 0.2).
+Madinah Naqsh — build script (draft 0.201).
 
 The letterforms are traced by tracer.py from a photograph of a rock inscription in the
 hills around Medina that carries Qur'an 33:70-71 (photograph: Muhammad al-Maghdhawi,
@@ -824,6 +824,21 @@ def build(out_path):
     order.append("_hidden")
     mark_glyphs = set(top_marks + bot_marks + empty_marks + ["_hidden"])
 
+    # Besides the hamza on alif, waw and ya' (above), ss01 takes away the two other hamzas,
+    # which the inscription never carved either:
+    #  * the hamza that stands on its own (شيء، السماء، جاء) becomes an empty glyph with no
+    #    width, so that شيء is set as شى with no gap.  It is a base, not a mark, so a vowel
+    #    written on the hamza stays where the hamza was (see the mark feature) instead of
+    #    falling on the letter before it.  Last in the glyph order, so every other glyph keeps
+    #    its number.
+    #  * the combining hamza above or below (U+0654, U+0655, as in بِـَٔايَٰتِنَا and تِلۡقَآيِٕ) is a
+    #    mark, and becomes the empty mark _hidden, as the vowels do under ss02; a vowel
+    #    written over it then sits on the letter itself.
+    glyphs["uni0621.ss01"] = G(0)
+    order.append("uni0621.ss01")
+    rasm[gname(0x0621)] = "uni0621.ss01"
+    rasm[gname(0x0654)] = rasm[gname(0x0655)] = "_hidden"
+
     # outlines and metrics
     glyf, hmtx, geoms = {}, {}, {}
     for n in order:
@@ -873,6 +888,9 @@ def build(out_path):
             continue
         (tx, ty), (bx, by) = anchors(geoms[n], glyphs[n].adv)
         fea.append("  pos base %s <anchor %d %d> mark @TOP <anchor %d %d> mark @BOT;" % (n, tx, ty, bx, by))
+    # the hamza that ss01 takes away: a vowel on it sits at the hamza's own height, where it was
+    (_, ty), (_, by) = anchors(geoms["uni0621"], glyphs["uni0621"].adv)
+    fea.append("  pos base uni0621.ss01 <anchor 0 %d> mark @TOP <anchor 0 %d> mark @BOT;" % (ty, by))
     fea.append("} mark;\n")
     fea.append("feature mkmk {")
     for n in top_marks:
@@ -894,10 +912,10 @@ def build(out_path):
     fb.setupNameTable({
         "familyName": "Madinah Naqsh",
         "styleName": "Regular",
-        "uniqueFontIdentifier": "MadinahNaqsh-Regular-0.200",
+        "uniqueFontIdentifier": "MadinahNaqsh-Regular-0.201",
         "fullName": "Madinah Naqsh Regular",
         "psName": "MadinahNaqsh-Regular",
-        "version": "Version 0.200",
+        "version": "Version 0.201",
         "copyright": "Copyright (c) 2026 Aland Kawa Ali",
         "licenseDescription": ("Licensed under the Aland Attribution & Non-Commercial License (AANCL) v1.0. "
                                "Attribution is required; commercial use requires prior written permission. "
