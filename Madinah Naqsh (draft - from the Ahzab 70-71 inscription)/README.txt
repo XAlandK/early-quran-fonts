@@ -25,10 +25,12 @@ Madinah Naqsh — draft 0.201
        «Previous version (draft 0.1 ...)» پارێزراوە.
   ٠٫٢  لە جیاتی لێوار، دوو شت لە وێنەکەوە وەردەگرێت کە تەڵخی
        نایانگۆڕێت: هێڵی ناوەڕاستی هەر هێڵێک، و ئەستوورییەکەی.
-  ٠٫٢٠١  (ئەمە) تەنها ss01 گۆڕاوە: ئێستا هەمزەی سەربەخۆش لادەبات (ء، وەک لە
-       «شيء»، «السماء»، «جاء»)، کە پێشتر هەر دەکێشرا. هەمزەکە دەبێتە شێوەیەکی
-       بەتاڵ و بێ پانی، بۆیە «شيء» دەبێتە «شى» بێ بۆشایی. بزوێنێک کە لەسەر
-       هەمزەکە نووسرابێت لە شوێنی هەمزەکە دەمێنێتەوە. هیچ پیتێک نەگۆڕاوە.
+  ٠٫٢٠١  (ئەمە) تەنها ss01 گۆڕاوە: ئێستا دوو هەمزەی تریش لادەبات کە پێشتر هەر
+       دەکێشران. هەمزەی سەربەخۆ (ء، وەک لە «شيء»، «السماء»، «جاء») دەبێتە
+       شێوەیەکی بەتاڵ و بێ پانی، بۆیە «شيء» دەبێتە «شى» بێ بۆشایی، و بزوێنێک
+       کە لەسەری نووسرابێت لە شوێنی هەمزەکە دەمێنێتەوە. هەمزەی سەر یان ژێر پیت
+       کە وەک نیشانەیەکی جیا دەنووسرێت (U+0654، U+0655، وەک لە «يَسۡـَٔلُونَكَ»)
+       نامێنێت، و بزوێنەکەی دەچێتە سەر خودی پیتەکە. هیچ پیتێک نەگۆڕاوە.
 
 چۆن دروست کراوە (٠٫٢):
   ١. هێڵی ناوەڕاست. بۆ هەر پیتێک، ئەو بەشەی هێڵەکە دەدۆزرێتەوە کە لە ٦٢٪ی
@@ -118,10 +120,12 @@ Versions
        "Previous version (draft 0.1 ...)".
   0.2  takes from the photograph two things that blur does not
        move: the centre line of every stroke, and its width.
-  0.201  (this one) changes only ss01: it now takes away the lone hamza too
-       (ء, as in شيء, السماء, جاء), which it used to leave drawn.  The hamza
-       becomes an empty glyph with no width, so شيء is set as شى with no gap;
-       a vowel written on the hamza stays where the hamza was.  No letter has
+  0.201  (this one) changes only ss01: it now takes away two hamzas it used
+       to leave drawn.  The lone hamza (ء, as in شيء, السماء, جاء) becomes an
+       empty glyph with no width, so شيء is set as شى with no gap, and a vowel
+       written on it stays where the hamza was.  The combining hamza above or
+       below a letter (U+0654, U+0655, as in يَسۡـَٔلُونَكَ) is no longer drawn,
+       and a vowel written over it sits on the letter itself.  No letter has
        changed.
 
 How it is made (0.2)

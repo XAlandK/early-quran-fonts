@@ -55,11 +55,15 @@ Birmingham Hijazi — v4.101
         چاوەکەی نەمابوو. لە ٢١٤ نموونەدا ٩١٪یان ئەو چاوەیان هەیە. ئێستا
         چاوەکە وەک لە دەستنووسەکەدا هێڵکاری کراوە.
       ٦٠ شێوەکەی تر نەگۆڕاون.
-  v4.101  تەنها ss01 گۆڕاوە: ئێستا هەمزەی سەربەخۆش لادەبات (ء، ئەو هەمزەیەی
-      لەسەر دێڕ دەنووسرێت، وەک لە «شيء»، «السماء»، «جاء»). پێشتر هەمزەی سەر
-      «ا»، «و» و «ی» و ناو لام‌ئەلیفی لادەبرد، بەڵام ئەم هەمزەیە هەر دەکێشرا. ئێستا
-      هەمزەکە دەبێتە شێوەیەکی بەتاڵ و بێ پانی، بۆیە «شيء» دەبێتە «شى» بێ
-      بۆشایی. بزوێنێک کە لەسەر هەمزەکە نووسرابێت لە شوێنی هەمزەکە دەمێنێتەوە.
+  v4.101  تەنها ss01 گۆڕاوە. پێشتر هەمزەی سەر «ا»، «و» و «ی» و ناو لام‌ئەلیفی
+      لادەبرد، بەڵام دوو هەمزەی تر هەر دەکێشران؛ ئێستا ئەوانیش لادەبات:
+      - هەمزەی سەربەخۆ (ء، ئەو هەمزەیەی لەسەر دێڕ دەنووسرێت، وەک لە «شيء»،
+        «السماء»، «جاء») دەبێتە شێوەیەکی بەتاڵ و بێ پانی، بۆیە «شيء» دەبێتە
+        «شى» بێ بۆشایی. بزوێنێک کە لەسەر هەمزەکە نووسرابێت لە شوێنی هەمزەکە
+        دەمێنێتەوە.
+      - هەمزەی سەر یان ژێر پیت کە وەک نیشانەیەکی جیا دەنووسرێت (U+0654،
+        U+0655، وەک لە «يَسۡـَٔلُونَكَ»، «تِلۡقَآيِٕ») نامێنێت، و بزوێنەکەی
+        دەچێتە سەر خودی پیتەکە.
       هیچ پیتێک نەگۆڕاوە.
 
 پشکنینەکان:
@@ -201,12 +205,17 @@ not see, because both lie inside the letter, not on its edge:
 
 The other 60 forms are unchanged.
 
-v4.101 changes only ss01: it now takes away the lone hamza too (ء, the hamza
-written on the line, as in شيء, السماء, جاء). Before, it took away the hamza
-on alif, waw and ya' and in lam-alif, but this one was still drawn. The
-hamza now becomes an empty glyph with no width, so شيء is set as شى with no
-gap; a vowel written on the hamza stays where the hamza was. No letter has
-changed.
+v4.101 changes only ss01. It took away the hamza on alif, waw and ya' and in
+lam-alif, but two other hamzas were still drawn; now it takes them away too:
+
+  * The lone hamza (ء, the hamza written on the line, as in شيء, السماء, جاء)
+    becomes an empty glyph with no width, so شيء is set as شى with no gap; a
+    vowel written on the hamza stays where the hamza was.
+  * The combining hamza above or below a letter (U+0654, U+0655, as in
+    يَسۡـَٔلُونَكَ, تِلۡقَآيِٕ) is no longer drawn, and a vowel written over it
+    sits on the letter itself.
+
+No letter has changed.
 
 Checks:
 

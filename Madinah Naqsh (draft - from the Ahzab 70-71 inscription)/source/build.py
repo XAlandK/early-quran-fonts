@@ -824,14 +824,20 @@ def build(out_path):
     order.append("_hidden")
     mark_glyphs = set(top_marks + bot_marks + empty_marks + ["_hidden"])
 
-    # ss01 also takes away the hamza that stands on its own (شيء، السماء، جاء), which the
-    # inscription never carved: it becomes an empty glyph with no width, so that شيء is set as
-    # شى with no gap.  It is a base, not a mark, so a vowel written on the hamza stays where
-    # the hamza was (see the mark feature) instead of falling on the letter before it.  Last
-    # in the glyph order, so every other glyph keeps its number.
+    # Besides the hamza on alif, waw and ya' (above), ss01 takes away the two other hamzas,
+    # which the inscription never carved either:
+    #  * the hamza that stands on its own (شيء، السماء، جاء) becomes an empty glyph with no
+    #    width, so that شيء is set as شى with no gap.  It is a base, not a mark, so a vowel
+    #    written on the hamza stays where the hamza was (see the mark feature) instead of
+    #    falling on the letter before it.  Last in the glyph order, so every other glyph keeps
+    #    its number.
+    #  * the combining hamza above or below (U+0654, U+0655, as in بِـَٔايَٰتِنَا and تِلۡقَآيِٕ) is a
+    #    mark, and becomes the empty mark _hidden, as the vowels do under ss02; a vowel
+    #    written over it then sits on the letter itself.
     glyphs["uni0621.ss01"] = G(0)
     order.append("uni0621.ss01")
     rasm[gname(0x0621)] = "uni0621.ss01"
+    rasm[gname(0x0654)] = rasm[gname(0x0655)] = "_hidden"
 
     # outlines and metrics
     glyf, hmtx, geoms = {}, {}, {}
