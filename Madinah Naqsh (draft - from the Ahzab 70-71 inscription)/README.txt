@@ -1,4 +1,4 @@
-Madinah Naqsh — draft 0.200
+Madinah Naqsh — draft 0.201
 ===========================
 
 کوردی
@@ -23,8 +23,12 @@ Madinah Naqsh — draft 0.200
        لێوارەی تێیدا دەبینرێت زۆربەی تەڵخیی وێنەکەیە نەک لێواری هەڵکۆڵینەکە.
        بۆیە پیتەکان ئەستوور و گرێدار دەرچووبوون. لە فۆڵدەری
        «Previous version (draft 0.1 ...)» پارێزراوە.
-  ٠٫٢  (ئەمە) لە جیاتی لێوار، دوو شت لە وێنەکەوە وەردەگرێت کە تەڵخی
+  ٠٫٢  لە جیاتی لێوار، دوو شت لە وێنەکەوە وەردەگرێت کە تەڵخی
        نایانگۆڕێت: هێڵی ناوەڕاستی هەر هێڵێک، و ئەستوورییەکەی.
+  ٠٫٢٠١  (ئەمە) تەنها ss01 گۆڕاوە: ئێستا هەمزەی سەربەخۆش لادەبات (ء، وەک لە
+       «شيء»، «السماء»، «جاء»)، کە پێشتر هەر دەکێشرا. هەمزەکە دەبێتە شێوەیەکی
+       بەتاڵ و بێ پانی، بۆیە «شيء» دەبێتە «شى» بێ بۆشایی. بزوێنێک کە لەسەر
+       هەمزەکە نووسرابێت لە شوێنی هەمزەکە دەمێنێتەوە. هیچ پیتێک نەگۆڕاوە.
 
 چۆن دروست کراوە (٠٫٢):
   ١. هێڵی ناوەڕاست. بۆ هەر پیتێک، ئەو بەشەی هێڵەکە دەدۆزرێتەوە کە لە ٦٢٪ی
@@ -112,8 +116,13 @@ Versions
        is small, and the outline it shows is mostly its own blur, not the
        edge of the carving; the letters came out heavy and lumpy.  Kept in
        "Previous version (draft 0.1 ...)".
-  0.2  (this one) takes from the photograph two things that blur does not
+  0.2  takes from the photograph two things that blur does not
        move: the centre line of every stroke, and its width.
+  0.201  (this one) changes only ss01: it now takes away the lone hamza too
+       (ء, as in شيء, السماء, جاء), which it used to leave drawn.  The hamza
+       becomes an empty glyph with no width, so شيء is set as شى with no gap;
+       a vowel written on the hamza stays where the hamza was.  No letter has
+       changed.
 
 How it is made (0.2)
   1. Centre line.  For each letter the part of every stroke that is brighter

@@ -3,7 +3,7 @@
 # Copyright (c) 2026 Aland Kawa Ali
 # Licensed under AANCL v1.0. See the LICENSE file.
 """
-Birmingham Hijazi — build script (version 4.1).
+Birmingham Hijazi — build script (version 4.101).
 
 The letterforms are not drawn: they are the outlines of the scribe's ink,
 traced by tracer.py from the photograph of the Birmingham Qur'an manuscript
@@ -777,6 +777,15 @@ def build(out_path):
     order.append("_hidden")
     mark_glyphs = set(top_marks + bot_marks + empty_marks + ["_hidden"])
 
+    # ss01 also takes away the hamza that stands on its own (شيء، السماء، جاء), which the
+    # manuscript never wrote: it becomes an empty glyph with no width, so that شيء is set as
+    # شى with no gap.  It is a base, not a mark, so a vowel written on the hamza stays where
+    # the hamza was (see the mark feature) instead of falling on the letter before it.  Last
+    # in the glyph order, so every other glyph keeps its number.
+    glyphs["uni0621.ss01"] = G(0)
+    order.append("uni0621.ss01")
+    rasm[gname(0x0621)] = "uni0621.ss01"
+
     # outlines and metrics
     glyf, hmtx, geoms = {}, {}, {}
     for n in order:
@@ -826,6 +835,9 @@ def build(out_path):
             continue
         (tx, ty), (bx, by) = anchors(geoms[n], glyphs[n].adv)
         fea.append("  pos base %s <anchor %d %d> mark @TOP <anchor %d %d> mark @BOT;" % (n, tx, ty, bx, by))
+    # the hamza that ss01 takes away: a vowel on it sits at the hamza's own height, where it was
+    (_, ty), (_, by) = anchors(geoms["uni0621"], glyphs["uni0621"].adv)
+    fea.append("  pos base uni0621.ss01 <anchor 0 %d> mark @TOP <anchor 0 %d> mark @BOT;" % (ty, by))
     fea.append("} mark;\n")
     fea.append("feature mkmk {")
     for n in top_marks:
@@ -847,10 +859,10 @@ def build(out_path):
     fb.setupNameTable({
         "familyName": "Birmingham Hijazi",
         "styleName": "Regular",
-        "uniqueFontIdentifier": "BirminghamHijazi-Regular-4.100",
+        "uniqueFontIdentifier": "BirminghamHijazi-Regular-4.101",
         "fullName": "Birmingham Hijazi Regular",
         "psName": "BirminghamHijazi-Regular",
-        "version": "Version 4.100",
+        "version": "Version 4.101",
         "copyright": "Copyright (c) 2026 Aland Kawa Ali",
         "licenseDescription": ("Licensed under the Aland Attribution & Non-Commercial License (AANCL) v1.0. "
                                "Attribution is required; commercial use requires prior written permission. "

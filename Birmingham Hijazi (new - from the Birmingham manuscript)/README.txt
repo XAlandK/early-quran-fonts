@@ -1,4 +1,4 @@
-Birmingham Hijazi — v4.100
+Birmingham Hijazi — v4.101
 ==========================
 
 کوردی
@@ -55,6 +55,12 @@ Birmingham Hijazi — v4.100
         چاوەکەی نەمابوو. لە ٢١٤ نموونەدا ٩١٪یان ئەو چاوەیان هەیە. ئێستا
         چاوەکە وەک لە دەستنووسەکەدا هێڵکاری کراوە.
       ٦٠ شێوەکەی تر نەگۆڕاون.
+  v4.101  تەنها ss01 گۆڕاوە: ئێستا هەمزەی سەربەخۆش لادەبات (ء، ئەو هەمزەیەی
+      لەسەر دێڕ دەنووسرێت، وەک لە «شيء»، «السماء»، «جاء»). پێشتر هەمزەی سەر
+      «ا»، «و» و «ی» و ناو لام‌ئەلیفی لادەبرد، بەڵام ئەم هەمزەیە هەر دەکێشرا. ئێستا
+      هەمزەکە دەبێتە شێوەیەکی بەتاڵ و بێ پانی، بۆیە «شيء» دەبێتە «شى» بێ
+      بۆشایی. بزوێنێک کە لەسەر هەمزەکە نووسرابێت لە شوێنی هەمزەکە دەمێنێتەوە.
+      هیچ پیتێک نەگۆڕاوە.
 
 پشکنینەکان:
   ١. فۆنت لەسەر نموونەکەی خۆی (source/audit.py). هەر پیتێک لە فایلی فۆنتەکەوە
@@ -194,6 +200,13 @@ not see, because both lie inside the letter, not on its edge:
     manuscript.
 
 The other 60 forms are unchanged.
+
+v4.101 changes only ss01: it now takes away the lone hamza too (ء, the hamza
+written on the line, as in شيء, السماء, جاء). Before, it took away the hamza
+on alif, waw and ya' and in lam-alif, but this one was still drawn. The
+hamza now becomes an empty glyph with no width, so شيء is set as شى with no
+gap; a vowel written on the hamza stays where the hamza was. No letter has
+changed.
 
 Checks:
 

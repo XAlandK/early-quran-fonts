@@ -17,12 +17,12 @@ alphabet.*
 
 | Font | Source | Status |
 |---|---|---|
-| [Birmingham Hijazi](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29) | The Birmingham Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a), parchment dated 568–645 CE, and the leaves of the same Qur'an in Paris (BnF Arabe 328, folios 71–86) | Version 4.100 — all 62 letter forms and the dots traced from the manuscript, checked against it pixel by pixel and against all 34 pages of the same Qur'an ([README](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/README.txt)) |
-| [Madinah Naqsh](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29) | A rock inscription near Medina carrying Qur'an 33:70–71 | Draft 0.200 — 28 letter forms: the centre line and the width of every stroke, taken from a small photograph ([README](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29/README.txt)) |
+| [Birmingham Hijazi](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29) | The Birmingham Qur'an manuscript (Cadbury Research Library, Mingana Islamic Arabic 1572a), parchment dated 568–645 CE, and the leaves of the same Qur'an in Paris (BnF Arabe 328, folios 71–86) | Version 4.101 — all 62 letter forms and the dots traced from the manuscript, checked against it pixel by pixel and against all 34 pages of the same Qur'an ([README](Birmingham%20Hijazi%20%28new%20-%20from%20the%20Birmingham%20manuscript%29/README.txt)) |
+| [Madinah Naqsh](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29) | A rock inscription near Medina carrying Qur'an 33:70–71 | Draft 0.201 — 28 letter forms: the centre line and the width of every stroke, taken from a small photograph ([README](Madinah%20Naqsh%20%28draft%20-%20from%20the%20Ahzab%2070-71%20inscription%29/README.txt)) |
 
 Both fonts write Arabic and Kurdish (Sorani), have Arabic joining, lam-alef,
-vowel marks, and two stylistic sets: `ss01` (rasm only, without dots) and
-`ss02` (hide vowel marks).
+vowel marks, and two stylistic sets: `ss01` (rasm only, without dots or
+hamzas) and `ss02` (hide vowel marks).
 
 Each font folder holds the `.ttf`, its README and a `source/` folder with the
 scripts that trace the letters, build the font and measure it against the
